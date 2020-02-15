@@ -1,17 +1,23 @@
 {
   "name": "reaction_node",
   "version": "1.0.0",
-  "description": "",
+  "description": "building reaction app using mongodb, express, react and nodejs",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "start": "node index.js",
+  "start-watch": "nodemon index.js",
+  "dev": "concurrently \"yarn run start-watch\" \"cd client && yarn start\""
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "author": "Ojini Jude",
+  "license": "MIT",
   "dependencies": {
-    "dotenv": "^8.2.0",
-    "express": "^4.17.1",
-    "mongoose": "^5.9.1"
+  "body-parser": "^1.18.3",
+  "dotenv": "^6.1.0",
+  "express": "^4.16.4",
+  "mongoose": "^5.3.6"
+  },
+  "devDependencies": {
+  "concurrently": "^4.0.1",
+  "nodemon": "^1.18.4"
   }
 }
