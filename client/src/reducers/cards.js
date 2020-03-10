@@ -19,6 +19,14 @@ const cards = (state = [], action) => {
         }
       });
       return filteredState.concat(cards);
+    case "CREATE_CARD_SUCCESS":
+      return state.concat(action.payload.card);
+    case "FETCH_CARD_SUCCESS":
+      const excludedCards = state.filter(
+        card => card._id !== action.payload.card._id
+      );
+      const card = action.payload.card;
+      return excludedCards.concat(card);
     default:
       return state;
   }

@@ -1,12 +1,12 @@
 import { connect } from "react-redux";
 import ToggleableAddCard from "./ToggleableAddCard";
-import * as actions from "../../actions/ListActions";
+import * as actions from "../../actions/CardActions";
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    // onAddCard: (card, callback) => {
-    //   dispatch(actions.createCard(ownProps.listId, card, callback));
-    // }
+    onAddCard: (title, callback) => {
+      dispatch(actions.createCard(ownProps.listId, title, callback));
+    }
   };
 };
 

@@ -114,13 +114,13 @@ router.post("/cards", (req, res, next) => {
     .then(result => {
       newCard = result;
       return List.findByIdAndUpdate(listId, {
-        $addToSet: { cards: result.id }
+        $addToSet: { cards: result._id }
       });
     })
-    .then(() => Card.findById(newCard.id))
-    .then(card => {
+    .then(() => Card.findById(newCard._id))
+    .then(newCard => {
       res.json({
-        card
+        newCard
       });
     })
     .catch(error => next(error));

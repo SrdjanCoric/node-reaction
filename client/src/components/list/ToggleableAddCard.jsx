@@ -24,7 +24,7 @@ class ToggleableAddCard extends React.Component {
 
   handleAddCard = e => {
     e.preventDefault();
-    this.props.onAddCard({ title: this.state.title }, () => {
+    this.props.onAddCard(this.state.title, () => {
       this.setState({
         title: ""
       });
