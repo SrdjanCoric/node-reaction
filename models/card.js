@@ -10,14 +10,14 @@ const CardSchema = new Schema(
       trim: true,
       required: [true, "The Card title is required"]
     },
-    // list: {
-    //   type: ObjectId,
-    //   ref: "List"
-    // },
-    // board: {
-    //   type: ObjectId,
-    //   ref: "Board"
-    // },
+    listId: {
+      type: ObjectId,
+      ref: "List"
+    },
+    boardId: {
+      type: ObjectId,
+      ref: "Board"
+    },
     dueDate: {
       type: Date
     },

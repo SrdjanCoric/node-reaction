@@ -5,7 +5,7 @@ const ListCards = ({ listId, cards }) => {
   return (
     <div id="cards-container" data-id={`list-${listId}-cards`}>
       {cards.map(card => {
-        return <ListCard key={card.id} {...card} />;
+        return <ListCard key={card._id} {...card} />;
       })}
     </div>
   );

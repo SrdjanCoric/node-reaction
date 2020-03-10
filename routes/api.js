@@ -94,6 +94,7 @@ router.put("/lists/:id", (req, res, next) => {
 router.post("/cards", (req, res, next) => {
   const { title, listId } = req.body;
   let newCard;
+  let boardId;
   List.findById(listId)
     .populate("board")
     .then(list => {
@@ -101,10 +102,13 @@ router.post("/cards", (req, res, next) => {
         throw new Error("List deosn't exist");
       }
 
+      boardId = list.board;
+
       return Card.create({
         title: title || "New Card",
-        description: description || "Enter a description here",
-        list: listId,
+        description: "Enter a description here",
+        listId: listId,
+        boardId: boardId,
         archived: false
       });
     })
@@ -115,9 +119,9 @@ router.post("/cards", (req, res, next) => {
       });
     })
     .then(() => Card.findById(newCard.id))
-    .then(result => {
+    .then(card => {
       res.json({
-        result
+        card
       });
     })
     .catch(error => next(error));

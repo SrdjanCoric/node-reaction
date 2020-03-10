@@ -30,7 +30,7 @@ class ListWrapper extends React.Component {
           <div className="list">
             <a className="more-icon sm-icon" href=""></a>
             <EditableListTitleContainer
-              listId={this.props.id}
+              listId={this.props._id}
               title={this.props.title}
             />
             <div className="add-dropdown add-top">
@@ -41,9 +41,9 @@ class ListWrapper extends React.Component {
                 <span>...</span>
               </div>
             </div>
-            <ListCardsContainer listId={this.props.id} />
+            <ListCardsContainer listId={this.props._id} />
             <ToggleableAddCardContainer
-              listId={this.props.id}
+              listId={this.props._id}
               openedAddCard={this.state.openedAddCard}
               onAddCardClick={this.handleAddCardClick}
               onAddCardClose={this.handleAddCardClose}

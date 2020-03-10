@@ -11,7 +11,7 @@ const ListSchema = new Schema(
       trim: true,
       required: [true, "The List title is required"]
     },
-    board: {
+    boardId: {
       type: ObjectId,
       ref: "Board"
     },
