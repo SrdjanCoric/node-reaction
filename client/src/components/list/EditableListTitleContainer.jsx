@@ -5,7 +5,7 @@ import * as actions from "../../actions/ListActions";
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onTitleUpdate: title => {
-      dispatch(actions.updateListTitle(ownProps.listId, { title }));
+      dispatch(actions.updateListTitle(ownProps.listId, title));
     }
   };
 };

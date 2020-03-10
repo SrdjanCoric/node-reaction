@@ -1,16 +1,17 @@
 import React from "react";
 import { connect } from "react-redux";
 import AddList from "./AddList";
+import * as actions from "../../actions/ListActions";
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   let boardId = ownProps.boardId;
   return {
-    onSubmit: list => {
-      // try {
-      //   dispatch(actions.createList(boardId, list));
-      // } catch (e) {
-      //   console.error(e);
-      // }
+    onSubmit: title => {
+      try {
+        dispatch(actions.createList(boardId, title));
+      } catch (e) {
+        console.error(e);
+      }
     }
   };
 };
@@ -43,7 +44,7 @@ class AddListContainer extends React.Component {
   handleSubmit = e => {
     e.stopPropagation();
     e.preventDefault();
-    this.props.onSubmit({ title: this.state.title });
+    this.props.onSubmit(this.state.title);
     this.handleClose(e);
     this.setState({ title: "" });
   };
@@ -61,7 +62,4 @@ class AddListContainer extends React.Component {
   }
 }
 
-export default connect(
-  null,
-  mapDispatchToProps
-)(AddListContainer);
+export default connect(null, mapDispatchToProps)(AddListContainer);

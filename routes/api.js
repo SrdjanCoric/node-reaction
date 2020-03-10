@@ -38,7 +38,6 @@ router.get("/boards/:id", (req, res, next) => {
 
 router.post("/lists", (req, res, next) => {
   const { title, boardId } = req.body;
-  console.log(req.body);
   let newList;
   Board.findById(boardId)
     .then(board => {
@@ -49,13 +48,13 @@ router.post("/lists", (req, res, next) => {
       return List.create({
         title: title || "New List",
         cards: [],
-        board: boardId
+        boardId: boardId
       });
     })
     .then(result => {
       newList = result;
       return Board.findByIdAndUpdate(boardId, {
-        $addToSet: { lists: result.id } // adds list to the lists array in board
+        $addToSet: { lists: result._id } // adds list to the lists array in board
       });
     })
     .then(() => {
@@ -84,9 +83,9 @@ router.put("/lists/:id", (req, res, next) => {
         path: "cards"
       });
     })
-    .then(result => {
+    .then(updatedList => {
       res.json({
-        result
+        updatedList
       });
     });
 });

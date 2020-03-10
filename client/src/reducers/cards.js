@@ -6,7 +6,7 @@ const cards = (state = [], action) => {
       let cards = [];
       lists.forEach(list => (cards = cards.concat(list.cards)));
       const filteredState = state.filter(card => {
-        return card.board !== boardId;
+        return card.boardId !== boardId;
       });
       cards = cards.map(card => {
         const existingVersion = state.find(
