@@ -33,7 +33,17 @@ const CardSchema = new Schema(
     archived: {
       type: Boolean,
       default: false
-    }
+    },
+    completed: {
+      type: Boolean,
+      default: false
+    },
+    comments: [
+      {
+        type: ObjectId,
+        ref: "Comment"
+      }
+    ]
   },
   { timestamps: true }
 );

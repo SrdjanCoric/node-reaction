@@ -151,4 +151,64 @@ router.get("/cards/:id", (req, res, next) => {
     .catch(error => next(error));
 });
 
+router.put("/cards/:id", (req, res, next) => {
+  const cardId = req.params.id;
+  const { attrs } = req.body;
+  let originalCard;
+
+  Card.findById(cardId)
+    .populate({
+      path: "list",
+      populate: {
+        path: "board"
+      }
+    })
+    .then(card => {
+      if (!card) {
+        throw new Error("Card doesn't exist.");
+      }
+
+      originalCard = card;
+      return Card.findByIdAndUpdate(
+        cardId,
+        {
+          ...attrs
+        },
+        { new: true }
+      );
+    })
+    .then(card => {
+      res.json({
+        card
+      });
+    })
+    .catch(error => next(error));
+});
+
+router.post("/comments", (req, res, next) => {
+  const { text, cardId } = req.body;
+  let newComment;
+  Card.findById(cardId)
+    .then(card => {
+      if (!card) {
+        throw new Error("Card doesn't exist");
+      }
+
+      return Comment.create({
+        text: text || "New Comment",
+        cardId: cardId
+      });
+    })
+    .then(result => {
+      newComment = result;
+      return Card.findByIdAndUpdate(cardId, {
+        $addToSet: { comments: result._id }
+      });
+    })
+    .then(() => {
+      res.json({ newComment });
+    })
+    .catch(err => next(err));
+});
+
 module.exports = router;

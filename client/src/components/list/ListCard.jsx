@@ -8,12 +8,14 @@ const ListCard = ({ _id, title, labels, description }) => {
         <div className="card ">
           <i className="edit-toggle edit-icon sm-icon"></i>
           <div className="card-info">
-            {labels.map((label, idx) => (
-              <div
-                key={idx}
-                className={`card-label ${label} colorblindable`}
-              ></div>
-            ))}
+            {labels
+              ? labels.map((label, idx) => (
+                  <div
+                    key={idx}
+                    className={`card-label ${label} colorblindable`}
+                  ></div>
+                ))
+              : null}
             <p>{title}</p>
           </div>
           <div className="card-icons">
