@@ -3,9 +3,9 @@ import BoardTile from "./BoardTile";
 import CreateBoardTile from "./CreateBoardTile";
 
 const BoardsDashboard = props => {
-  let boards = props.boards.map(board => (
-    <BoardTile title={board.title} id={board.id} key={board.id} />
-  ));
+  let boards = props.boards.map(board => {
+    return <BoardTile key={board._id} title={board.title} id={board._id} />
+  });
 
   return (
     <main className="dashboard">
