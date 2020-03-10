@@ -5,7 +5,7 @@ const ExistingLists = ({ lists }) => {
   return (
     <div id="existing-lists" className="existing-lists">
       {lists.map(list => (
-        <ListWrapper key={list.id} {...list} />
+        <ListWrapper key={list._id} {...list} />
       ))}
     </div>
   );

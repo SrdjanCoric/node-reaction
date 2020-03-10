@@ -5,7 +5,7 @@ import * as boardSelectors from "../../selectors/BoardSelectors";
 import Board from "./Board";
 
 const mapStateToProps = (state, ownProps) => {
-  let boardId = +ownProps.match.params.id;
+  let boardId = ownProps.match.params.id;
   return {
     board: boardSelectors.getBoardById(state, boardId)
   };
@@ -14,7 +14,7 @@ const mapStateToProps = (state, ownProps) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onFetchBoard: () => {
-      let boardId = +ownProps.match.params.id;
+      let boardId = ownProps.match.params.id;
       dispatch(actions.fetchBoard(boardId));
     }
   };
@@ -34,7 +34,4 @@ class BoardContainer extends React.Component {
   }
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(BoardContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(BoardContainer);

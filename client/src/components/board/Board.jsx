@@ -7,7 +7,7 @@ const Board = ({ board }) => {
     <div>
       <BoardHeader title={board.title} />
       <main>
-        <ListContainer boardId={board.id} />
+        <ListContainer boardId={board._id} />
       </main>
     </div>
   );
