@@ -1,0 +1,42 @@
+const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
+
+const { ObjectId } = Schema.Types;
+
+const CardSchema = new Schema(
+  {
+    title: {
+      type: String,
+      trim: true,
+      required: [true, "The Card title is required"]
+    },
+    // list: {
+    //   type: ObjectId,
+    //   ref: "List"
+    // },
+    // board: {
+    //   type: ObjectId,
+    //   ref: "Board"
+    // },
+    dueDate: {
+      type: Date
+    },
+    labels: [
+      {
+        type: String
+      }
+    ],
+    description: {
+      type: String,
+      maxlength: 20000
+    },
+    archived: {
+      type: Boolean,
+      default: false
+    }
+  },
+  { timestamps: true }
+);
+
+const Card = mongoose.model("Card", CardSchema);
+module.exports = Card;
