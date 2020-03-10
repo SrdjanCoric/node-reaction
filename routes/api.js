@@ -15,7 +15,7 @@ router.post('/boards', (req, res, next) => {
 });
 
 router.get('/boards/:id', (req, res, next) => {
-  Board.findOne({"_id": req.params.id}).then(data => res.json(data)).catch(next);
+  Board.findOne({"id": req.params.id}).then(data => res.json(data)).catch(next);
 });
 
 module.exports = router;
