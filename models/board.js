@@ -10,6 +10,6 @@ const BoardSchema = new Schema({
 })
 
 //create model for todo
-const Todo = mongoose.model('board', BoardSchema);
+const Board = mongoose.model('board', BoardSchema);
 
-module.exports = Todo;
+module.exports = Board;
