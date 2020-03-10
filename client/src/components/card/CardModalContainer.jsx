@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import * as actions from "../../actions/CardActions";
 import { createComment } from "../../actions/CommentActions";
 import moment from "moment";
+import * as commentSelectors from "../../selectors/CommentSelectors";
 import CardModal from "./CardModal";
 import Popover from "../shared/Popover";
 import DueDateForm from "./DueDateForm";
@@ -14,10 +15,15 @@ const mapStateToProps = (state, ownProps) => {
   const cardId = ownProps.match.params.id;
   const card = state.cards.find(card => card._id === cardId);
   const list = state.lists.find(list => list._id === card.listId);
+  const comments = commentSelectors.cardComments(
+    state,
+    cardId,
+    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+  );
   return {
     card,
     list,
-    comments: []
+    comments
   };
 };
 

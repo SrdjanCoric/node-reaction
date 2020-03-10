@@ -3,6 +3,7 @@ const router = express.Router();
 const Board = require("../models/board");
 const List = require("../models/list");
 const Card = require("../models/card");
+const Comment = require("../models/comment");
 
 router.get("/boards", (req, res, next) => {
   Board.find({}, "title")
@@ -102,11 +103,9 @@ router.post("/cards", (req, res, next) => {
 
       boardId = list.boardId;
 
-      console.log("in api", boardId);
-
       return Card.create({
         title: title || "New Card",
-        description: "Enter a description here",
+        description: "",
         listId: listId,
         boardId: boardId,
         archived: false
@@ -137,6 +136,9 @@ router.get("/cards/:id", (req, res, next) => {
         populate: {
           path: "board"
         }
+      },
+      {
+        path: "comments"
       }
     ])
     .then(card => {
@@ -186,6 +188,7 @@ router.put("/cards/:id", (req, res, next) => {
 });
 
 router.post("/comments", (req, res, next) => {
+  console.log(req.body);
   const { text, cardId } = req.body;
   let newComment;
   Card.findById(cardId)
@@ -200,6 +203,7 @@ router.post("/comments", (req, res, next) => {
       });
     })
     .then(result => {
+      console.log(result);
       newComment = result;
       return Card.findByIdAndUpdate(cardId, {
         $addToSet: { comments: result._id }

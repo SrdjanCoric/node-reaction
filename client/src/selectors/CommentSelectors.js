@@ -1,5 +1,5 @@
 export function cardComments(state, cardId, sortFunction) {
-  const comments = state.comments.filter(comment => comment.card_id === cardId);
+  const comments = state.comments.filter(comment => comment.cardId === cardId);
 
   if (typeof sortFunction === "function") {
     return comments.sort(sortFunction);
