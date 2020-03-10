@@ -1,24 +1,27 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const ListCard = ({ title, labels, description }) => {
+const ListCard = ({ _id, title, labels, description }) => {
   return (
-    <div className="card-background">
-      <div className="card ">
-        <i className="edit-toggle edit-icon sm-icon"></i>
-        <div className="card-info">
-          {labels.map((label, idx) => (
-            <div
-              key={idx}
-              className={`card-label ${label} colorblindable`}
-            ></div>
-          ))}
-          <p>{title}</p>
-        </div>
-        <div className="card-icons">
-          {description ? <i className="description-icon sm-icon"></i> : null}
+    <Link to={`/cards/${_id}`} data-card-id={_id}>
+      <div className="card-background">
+        <div className="card ">
+          <i className="edit-toggle edit-icon sm-icon"></i>
+          <div className="card-info">
+            {labels.map((label, idx) => (
+              <div
+                key={idx}
+                className={`card-label ${label} colorblindable`}
+              ></div>
+            ))}
+            <p>{title}</p>
+          </div>
+          <div className="card-icons">
+            {description ? <i className="description-icon sm-icon"></i> : null}
+          </div>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

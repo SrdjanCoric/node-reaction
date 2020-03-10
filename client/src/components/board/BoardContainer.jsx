@@ -1,37 +1,42 @@
-import React from "react";
 import { connect } from "react-redux";
 import * as actions from "../../actions/BoardActions";
-import * as boardSelectors from "../../selectors/BoardSelectors";
 import Board from "./Board";
 
 const mapStateToProps = (state, ownProps) => {
-  let boardId = ownProps.match.params.id;
-  return {
-    board: boardSelectors.getBoardById(state, boardId)
-  };
-};
-
-const mapDispatchToProps = (dispatch, ownProps) => {
-  return {
-    onFetchBoard: () => {
-      let boardId = ownProps.match.params.id;
-      dispatch(actions.fetchBoard(boardId));
-    }
-  };
-};
-
-class BoardContainer extends React.Component {
-  componentDidMount() {
-    this.props.onFetchBoard();
-  }
-
-  render() {
-    if (this.props.board) {
-      return <Board board={this.props.board} />;
+  let boardId;
+  let card;
+  const { url } = ownProps.match;
+  if (url.match(new RegExp("^/boards/"))) {
+    boardId = ownProps.match.params.id;
+  } else {
+    card = state.cards.find(card => card._id === ownProps.match.params.id);
+    if (card) {
+      boardId = card.boardId;
     } else {
-      return null;
+      boardId = null;
     }
   }
-}
+  if (boardId) {
+    return {
+      board: state.boards.find(board => board._id === boardId),
+      card: card,
+      boardId: boardId
+    };
+  } else {
+    return {
+      board: null,
+      card: card,
+      boardId: boardId
+    };
+  }
+};
 
-export default connect(mapStateToProps, mapDispatchToProps)(BoardContainer);
+const mapDispatchToProps = dispatch => {
+  return {
+    onFetchBoard: (boardId, callback) => {
+      dispatch(actions.fetchBoard(boardId, callback));
+    }
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Board);

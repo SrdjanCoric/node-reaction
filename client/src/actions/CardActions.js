@@ -32,6 +32,8 @@ export function createCard(listId, title, callback) {
 export function fetchCard(id) {
   return function(dispatch) {
     dispatch(fetchCardRequest());
-    apiClient.getCard(id, card => dispatch(fetchCardSuccess(card)));
+    apiClient.getCard(id, data => {
+      dispatch(fetchCardSuccess(data.card));
+    });
   };
 }

@@ -33,7 +33,6 @@ router.get("/boards/:id", (req, res, next) => {
       });
     })
     .catch(err => next(err));
-  // Board.findOne({"_id": req.params.id}).then(data => res.json(data)).catch(next);
 });
 
 router.post("/lists", (req, res, next) => {
@@ -101,7 +100,9 @@ router.post("/cards", (req, res, next) => {
         throw new Error("List deosn't exist");
       }
 
-      boardId = list.board;
+      boardId = list.boardId;
+
+      console.log("in api", boardId);
 
       return Card.create({
         title: title || "New Card",
@@ -126,7 +127,7 @@ router.post("/cards", (req, res, next) => {
     .catch(error => next(error));
 });
 
-router.get("/:id", (req, res, next) => {
+router.get("/cards/:id", (req, res, next) => {
   const cardId = req.params.id;
 
   Card.findById(cardId)
