@@ -1,7 +1,7 @@
 import moment from "moment";
 
 export const dueClass = card => {
-  const diff = moment(card.due_date).diff(new Date(), "days");
+  const diff = moment(card.dueDate).diff(new Date(), "days");
 
   if (card.completed) {
     return "completed";
