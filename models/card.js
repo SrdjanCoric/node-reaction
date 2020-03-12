@@ -26,6 +26,9 @@ const CardSchema = new Schema(
         type: String
       }
     ],
+    position: {
+      type: Number
+    },
     description: {
       type: String,
       maxlength: 20000

@@ -37,7 +37,7 @@ router.get("/boards/:id", (req, res, next) => {
 });
 
 router.post("/lists", (req, res, next) => {
-  const { title, boardId } = req.body;
+  const { title, boardId, position } = req.body;
   let newList;
   Board.findById(boardId)
     .then(board => {
@@ -47,6 +47,7 @@ router.post("/lists", (req, res, next) => {
 
       return List.create({
         title: title || "New List",
+        position: position || 65535,
         cards: [],
         boardId: boardId
       });
@@ -91,7 +92,7 @@ router.put("/lists/:id", (req, res, next) => {
 });
 
 router.post("/cards", (req, res, next) => {
-  const { title, listId } = req.body;
+  const { title, listId, position } = req.body;
   let newCard;
   let boardId;
   List.findById(listId)
@@ -108,7 +109,8 @@ router.post("/cards", (req, res, next) => {
         description: "",
         listId: listId,
         boardId: boardId,
-        archived: false
+        archived: false,
+        position: position || 65535
       });
     })
     .then(result => {
