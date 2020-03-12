@@ -7,7 +7,6 @@ const sortedCards = cards => {
 };
 
 const ListCards = ({ listId, cards }) => {
-  console.log("cards", cards);
   return (
     <div id="cards-container" data-id={`list-${listId}-cards`}>
       {sortedCards(cards).map(card => {

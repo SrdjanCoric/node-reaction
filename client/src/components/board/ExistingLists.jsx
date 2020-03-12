@@ -2,7 +2,6 @@ import React from "react";
 import ListWrapper from "../list/ListWrapper";
 
 const ExistingLists = ({ lists }) => {
-  console.log("lists", lists);
   return (
     <div id="existing-lists" className="existing-lists">
       {lists.map(list => (

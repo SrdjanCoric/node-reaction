@@ -65,6 +65,12 @@ class CardLocationFormContainer extends React.Component {
     );
   }
 
+  componentDidUpdate(prevProps) {
+    if (prevProps.boards.length !== this.props.boards.length) {
+      this.setState({ boards: this.props.boards });
+    }
+  }
+
   currentCardPositionIndex = () => {
     const cards = this.props.cards;
     let currentPosition = cards.findIndex(
@@ -76,27 +82,27 @@ class CardLocationFormContainer extends React.Component {
   };
 
   handleBoardChange = e => {
-    const selectedValue = Number(e.target.value);
-
+    const selectedValue = e.target.value;
+    console.log("here", selectedValue);
     this.selectBoard(selectedValue);
   };
 
   handleListChange = e => {
-    const selectedValue = Number(e.target.value);
-
+    const selectedValue = e.target.value;
     this.selectList(selectedValue);
   };
 
   selectBoard = id => {
     this.props.onFetchBoard(id, board => {
       const newLists = board.lists.sort(sortByTitle);
+      console.log(board);
       this.setState(
         {
           selectedBoard: board,
           lists: newLists
         },
         () => {
-          if (this.state.selectedBoard.id === this.props.card.boardId) {
+          if (this.state.selectedBoard._id === this.props.card.boardId) {
             this.selectList(this.props.card.listId);
           } else if (newLists.length) {
             this.selectList(newLists[0]._id);
@@ -216,7 +222,7 @@ class CardLocationFormContainer extends React.Component {
 
   selectedBoardId = () => {
     if (this.state.selectedBoard) {
-      return this.state.selectedBoard.id;
+      return this.state.selectedBoard._id;
     } else {
       return undefined;
     }

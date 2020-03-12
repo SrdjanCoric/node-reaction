@@ -939,6 +939,11 @@ small {
 .boards span {
   pointer-events: none;
 }
+
+.boards a {
+  color: white;
+}
+
 .boards:before {
   padding-right: 10px;
   vertical-align: top;
@@ -3971,6 +3976,11 @@ form.description .textarea-toggle {
   .boards span {
     display: none;
   }
+
+  .boards a {
+    color: white;
+  }
+
   .boards:before {
     padding-right: 0px;
   }
