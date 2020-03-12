@@ -131,7 +131,7 @@ class CardModalContainer extends React.Component {
 
     this.props.onUpdateCard(
       this.state.card._id,
-      { due_date: moment(dateTime, "M/D/YYYY h:mm A").toISOString() },
+      { dueDate: moment(dateTime, "M/D/YYYY h:mm A").toISOString() },
       () => {
         this.onClosePopover();
       }
@@ -174,7 +174,7 @@ class CardModalContainer extends React.Component {
         case "due-date":
           return (
             <DueDateForm
-              dueDate={this.state.card.due_date}
+              dueDate={this.state.card.dueDate}
               onClose={this.handleClosePopover}
               onSubmit={this.handleDueDateSubmit}
               onRemove={this.handleDueDateRemove}

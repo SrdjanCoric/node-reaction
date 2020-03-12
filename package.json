@@ -13,8 +13,10 @@
   "dependencies": {
     "axios": "^0.19.2",
     "body-parser": "^1.18.3",
+    "debounce": "^1.2.0",
     "dotenv": "^6.1.0",
     "express": "^4.16.4",
+    "jquery": "^3.4.1",
     "moment": "^2.24.0",
     "mongoose": "^5.3.6",
     "pikaday": "^1.8.0",
