@@ -1,13 +1,38 @@
 import { connect } from "react-redux";
 import ToggleableAddCard from "./ToggleableAddCard";
 import * as actions from "../../actions/CardActions";
+import calculatePosition from "../../lib/PositionCalculator";
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapStateToProps = state => {
   return {
-    onAddCard: (title, callback) => {
-      dispatch(actions.createCard(ownProps.listId, title, callback));
-    }
+    state
   };
 };
 
-export default connect(null, mapDispatchToProps)(ToggleableAddCard);
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch
+  };
+};
+
+const mergeStateToProps = (stateProps, dispatchProps, ownProps) => {
+  let cardsFromList = stateProps.state.cards.filter(
+    card => card.listId === ownProps.listId
+  );
+  let targetPosition = cardsFromList.length;
+  let position = calculatePosition(cardsFromList, targetPosition);
+  return {
+    onAddCard: (title, callback) => {
+      dispatchProps.dispatch(
+        actions.createCard(ownProps.listId, title, position, callback)
+      );
+    },
+    ...ownProps
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeStateToProps
+)(ToggleableAddCard);

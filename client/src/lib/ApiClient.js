@@ -40,9 +40,13 @@ const apiClient = {
       .then(callback)
       .catch(logError);
   },
-  createList: function(boardId, title, callback) {
+  createList: function(boardId, title, position, callback) {
     return axios
-      .post(routes.CREATE_LIST_URL, { boardId: boardId, title: title })
+      .post(routes.CREATE_LIST_URL, {
+        boardId,
+        title,
+        position
+      })
       .then(unwrapData)
       .then(callback)
       .catch(logError);
@@ -54,9 +58,9 @@ const apiClient = {
       .then(callback)
       .catch(logError);
   },
-  createCard: function(listId, title, callback) {
+  createCard: function(listId, title, position, callback) {
     return axios
-      .post(routes.CREATE_CARD_URL, { listId, title })
+      .post(routes.CREATE_CARD_URL, { listId, title, position })
       .then(unwrapData)
       .then(callback)
       .catch(logError);

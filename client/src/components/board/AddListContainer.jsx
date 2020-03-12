@@ -2,17 +2,36 @@ import React from "react";
 import { connect } from "react-redux";
 import AddList from "./AddList";
 import * as actions from "../../actions/ListActions";
+import calculatePosition from "../../lib/PositionCalculator";
 
-const mapDispatchToProps = (dispatch, ownProps) => {
+const mapStateToProps = state => {
+  return {
+    state
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    dispatch
+  };
+};
+
+const mergeStateToProps = (stateProps, dispatchProps, ownProps) => {
   let boardId = ownProps.boardId;
+  let listsFromBoard = stateProps.state.lists.filter(
+    list => list.boardId === boardId
+  );
+  let targetPosition = listsFromBoard.length;
+  let position = calculatePosition(listsFromBoard, targetPosition);
   return {
     onSubmit: title => {
       try {
-        dispatch(actions.createList(boardId, title));
+        dispatchProps.dispatch(actions.createList(boardId, title, position));
       } catch (e) {
         console.error(e);
       }
-    }
+    },
+    ...ownProps
   };
 };
 
@@ -62,4 +81,8 @@ class AddListContainer extends React.Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(AddListContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+  mergeStateToProps
+)(AddListContainer);

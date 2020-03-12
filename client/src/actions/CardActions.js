@@ -33,10 +33,10 @@ export function deleteCardSuccess(cardId) {
   return { type: types.DELETE_CARD_SUCCESS, payload: { cardId } };
 }
 
-export function createCard(listId, title, callback) {
+export function createCard(listId, title, position, callback) {
   return function(dispatch) {
     dispatch(createCardRequest);
-    apiClient.createCard(listId, title, data => {
+    apiClient.createCard(listId, title, position, data => {
       dispatch(createCardSuccess(data.newCard));
       if (callback) {
         callback(data.newCard);
