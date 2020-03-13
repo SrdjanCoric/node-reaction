@@ -24,7 +24,7 @@ const mergeStateToProps = (stateProps, dispatchProps, ownProps) => {
   return {
     onAddCard: (title, callback) => {
       dispatchProps.dispatch(
-        actions.createCard(ownProps.listId, title, position, callback)
+        actions.createCard(ownProps.listId, { title, position }, callback)
       );
     },
     ...ownProps

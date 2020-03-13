@@ -92,7 +92,9 @@ router.put("/lists/:id", (req, res, next) => {
 });
 
 router.post("/cards", (req, res, next) => {
-  const { title, listId, position } = req.body;
+  const { listId, card } = req.body;
+  let { title, position, copyFrom, keep } = card;
+  let copyCard = {};
   let newCard;
   let boardId;
   List.findById(listId)
@@ -103,14 +105,22 @@ router.post("/cards", (req, res, next) => {
       }
 
       boardId = list.boardId;
+      if (copyFrom) {
+        Card.findById(copyFrom).then(card => {
+          copyCard = card;
+        });
+      }
 
       return Card.create({
-        title: title || "New Card",
-        description: "",
-        listId: listId,
-        boardId: boardId,
+        labels: copyCard.labels || [],
+        dueDate: copyCard.dueDate || null,
+        title: copyCard.title || title,
+        description: copyCard.description,
+        listId: copyCard.listId || listId,
+        boardId: copyCard.boardId || boardId,
         archived: false,
-        position: position || 65535
+        position: position,
+        comments: keep ? copyCard.comments : []
       });
     })
     .then(result => {

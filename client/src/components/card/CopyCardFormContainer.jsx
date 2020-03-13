@@ -14,6 +14,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = dispatch => {
+  console.log("in dispatch");
   return {
     onCreateCard: (listId, card, callback) => {
       dispatch(actions.createCard(listId, card, callback));
@@ -63,13 +64,12 @@ class CopyCardFormContainer extends React.Component {
         return a.position - b.position;
       }
     );
-
     this.props.onCreateCard(
       this.state.location.listId,
       {
         title: this.state.title,
         position: calculatePosition(listCards, position),
-        copy_from: this.props.card._id,
+        copyFrom: this.props.card._id,
         keep: {
           comments: this.state.keepComments
         }
