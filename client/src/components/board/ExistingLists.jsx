@@ -6,6 +6,22 @@ import * as cardSelectors from "../../selectors/CardSelectors";
 import calculatePosition from "../../lib/PositionCalculator";
 
 class ExistingLists extends React.Component {
+  state = {
+    addCardActiveListId: null
+  };
+
+  handleAddCardClick = id => {
+    this.setState({
+      addCardActiveListId: id
+    });
+  };
+
+  handleAddCardClose = () => {
+    this.setState({
+      addCardActiveListId: null
+    });
+  };
+
   componentDidMount() {
     this.cardDrake = dragula({
       isContainer: function(el) {
@@ -87,7 +103,13 @@ class ExistingLists extends React.Component {
         ref={this.dragulaDecorator}
       >
         {this.sortedLists().map(list => (
-          <ListWrapperContainer key={list._id} {...list} />
+          <ListWrapperContainer
+            key={list._id}
+            {...list}
+            addCardActive={this.state.addCardActiveListId === list._id}
+            onAddCardClick={this.handleAddCardClick}
+            onAddCardClose={this.handleAddCardClose}
+          />
         ))}
       </div>
     );

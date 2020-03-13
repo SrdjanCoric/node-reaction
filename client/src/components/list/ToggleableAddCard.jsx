@@ -19,6 +19,7 @@ class ToggleableAddCard extends React.Component {
     this.setState({
       title: ""
     });
+    console.log("here");
     this.props.onAddCardClose();
   };
 
@@ -52,13 +53,13 @@ class ToggleableAddCard extends React.Component {
           <a className="button" onClick={this.handleAddCard}>
             Add
           </a>
-          <i className="x-icon icon" onClick={this.props.onAddCardClose}></i>
+          <i className="x-icon icon" onClick={this.handleAddCardClose}></i>
           <div className="add-options">
             <span>...</span>
           </div>
         </div>
         <div
-          onClick={this.props.onAddCardClick}
+          onClick={() => this.props.onAddCardClick(this.props.listId)}
           className="add-card-toggle"
           data-position="bottom"
         >

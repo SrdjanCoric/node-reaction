@@ -4,24 +4,8 @@ import EditableListTitleContainer from "./EditableListTitleContainer";
 import ToggleableAddCardContainer from "./ToggleableAddCardContainer";
 
 class ListWrapper extends React.Component {
-  state = {
-    openedAddCard: false
-  };
-
-  handleAddCardClick = () => {
-    this.setState({
-      openedAddCard: true
-    });
-  };
-
-  handleAddCardClose = () => {
-    this.setState({
-      openedAddCard: false
-    });
-  };
-
   render() {
-    const classList = this.state.openedAddCard
+    const classList = this.props.addCardActive
       ? "list-wrapper add-dropdown-active"
       : "list-wrapper";
     return (
@@ -48,9 +32,9 @@ class ListWrapper extends React.Component {
             <ListCardsContainer listId={this.props._id} />
             <ToggleableAddCardContainer
               listId={this.props._id}
-              openedAddCard={this.state.openedAddCard}
-              onAddCardClick={this.handleAddCardClick}
-              onAddCardClose={this.handleAddCardClose}
+              openedAddCard={this.props.addCardActive}
+              onAddCardClick={this.props.onAddCardClick}
+              onAddCardClose={this.props.onAddCardClose}
             />
           </div>
         </div>
