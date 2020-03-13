@@ -13,11 +13,12 @@ const lists = (state = [], action) => {
       return filteredLists.concat(listsWithoutCards);
     case "CREATE_LIST_SUCCESS":
       return state.concat(action.payload.list);
-    case "UPDATE_LIST_TITLE_SUCCESS":
+    case "UPDATE_LIST_SUCCESS":
       return state.map(list => {
         if (list._id === action.payload.listId) {
           return Object.assign({}, list, {
-            title: action.payload.newList.title
+            title: action.payload.newList.title,
+            position: action.payload.newList.position
           });
         } else {
           return list;

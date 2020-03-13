@@ -66,7 +66,7 @@ router.post("/lists", (req, res, next) => {
 
 router.put("/lists/:id", (req, res, next) => {
   const listId = req.params.id;
-  const { title } = req.body;
+  const { title, position } = req.body;
   List.findById(listId)
     .populate("board")
     .then(list => {
@@ -77,7 +77,8 @@ router.put("/lists/:id", (req, res, next) => {
       return List.findByIdAndUpdate(
         listId,
         {
-          title: title || list.title
+          title: title || list.title,
+          position: position || list.position
         },
         { new: true }
       ).populate({

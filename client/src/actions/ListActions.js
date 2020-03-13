@@ -9,13 +9,13 @@ export function createListSuccess(list) {
   return { type: types.CREATE_LIST_SUCCESS, payload: { list } };
 }
 
-export function updateListTitleRequest() {
-  return { type: types.UPDATE_LIST_TITLE_REQUEST };
+export function updateListRequest() {
+  return { type: types.UPDATE_LIST_REQUEST };
 }
 
-export function updateListTitleSuccess(listId, newList) {
+export function updateListSuccess(listId, newList) {
   return {
-    type: types.UPDATE_LIST_TITLE_SUCCESS,
+    type: types.UPDATE_LIST_SUCCESS,
     payload: { listId, newList }
   };
 }
@@ -32,11 +32,11 @@ export function createList(boardId, title, position, callback) {
   };
 }
 
-export function updateListTitle(listId, title, callback) {
+export function updateList(listId, list, callback) {
   return function(dispatch) {
-    dispatch(updateListTitleRequest());
-    apiClient.updateListTitle(listId, title, data => {
-      dispatch(updateListTitleSuccess(listId, data.updatedList));
+    dispatch(updateListRequest());
+    apiClient.updateList(listId, list, data => {
+      dispatch(updateListSuccess(listId, data.updatedList));
       if (callback) {
         callback(data.updatedList);
       }

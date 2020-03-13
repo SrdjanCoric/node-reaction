@@ -21,6 +21,7 @@
     "mongoose": "^5.3.6",
     "pikaday": "^1.8.0",
     "prettierrc": "^0.0.0-5",
+    "react-dragula": "^1.1.17",
     "react-router-dom": "^5.1.2",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0"

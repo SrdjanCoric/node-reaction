@@ -25,7 +25,11 @@ class ListWrapper extends React.Component {
       ? "list-wrapper add-dropdown-active"
       : "list-wrapper";
     return (
-      <div className={classList}>
+      <div
+        className={classList}
+        data-list-id={this.props._id}
+        onDrop={this.props.onDrop}
+      >
         <div className="list-background">
           <div className="list">
             <a className="more-icon sm-icon" href=""></a>
