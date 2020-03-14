@@ -20,7 +20,6 @@ const mapStateToProps = (state, ownProps) => {
     cardId,
     (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
-  console.log(comments);
   return {
     card,
     list,

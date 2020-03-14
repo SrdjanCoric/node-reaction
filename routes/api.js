@@ -123,16 +123,31 @@ router.post("/cards", (req, res, next) => {
         boardId: copyCard.boardId || boardId,
         archived: false,
         position: position,
-        comments: keep ? copyCard.comments : []
+        comments: keep ? copyCard.comments : [],
+        actions: copyCard.actions || []
       });
     })
     .then(result => {
       newCard = result;
       return List.findByIdAndUpdate(listId, {
-        $addToSet: { cards: result._id }
+        $addToSet: { cards: newCard._id }
       });
     })
-    .then(() => Card.findById(newCard._id))
+    .then(() => {
+      return Action.create({
+        description: "Card was created",
+        cardId: newCard._id
+      });
+    })
+    .then(action => {
+      return Card.findByIdAndUpdate(
+        newCard._id,
+        {
+          $push: { actions: action._id }
+        },
+        { new: true }
+      ).populate(["actions"]);
+    })
     .then(newCard => {
       res.json({
         newCard
@@ -174,7 +189,6 @@ router.get("/cards/:id", (req, res, next) => {
 router.put("/cards/:id", (req, res, next) => {
   const cardId = req.params.id;
   const { attrs } = req.body;
-  let actionObj;
 
   Card.findById(cardId)
     .populate({
@@ -188,7 +202,7 @@ router.put("/cards/:id", (req, res, next) => {
         throw new Error("Card doesn't exist.");
       }
 
-      let actionMessage = parseCardChange(attrs);
+      let actionMessage = parseCardChange(attrs, card);
 
       if (actionMessage) {
         return Action.create({
