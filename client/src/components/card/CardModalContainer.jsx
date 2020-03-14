@@ -15,11 +15,12 @@ const mapStateToProps = (state, ownProps) => {
   const cardId = ownProps.match.params.id;
   const card = state.cards.find(card => card._id === cardId);
   const list = state.lists.find(list => list._id === card.listId);
-  const comments = commentSelectors.cardComments(
+  const comments = commentSelectors.cardCommentsAndActions(
     state,
     cardId,
-    (a, b) => new Date(b.created_at) - new Date(a.created_at)
+    (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
   );
+  console.log(comments);
   return {
     card,
     list,

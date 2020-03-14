@@ -29,7 +29,7 @@ const CardModal = props => {
           <p>
             <span className="member-name">Victor Reyes</span>{" "}
             {comment.description}{" "}
-            <small>{moment(comment.created_at).fromNow()}</small>
+            <small>{moment(comment.createdAt).fromNow()}</small>
           </p>
         </li>
       ) : (
@@ -42,7 +42,7 @@ const CardModal = props => {
             <span>{comment.text}</span>
           </div>
           <small>
-            {moment(comment.created_at).fromNow()} -{" "}
+            {moment(comment.createdAt).fromNow()} -{" "}
             <span className="link">Edit</span> -{" "}
             <span className="link">Delete</span>
           </small>

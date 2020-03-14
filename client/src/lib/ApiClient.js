@@ -79,6 +79,14 @@ const apiClient = {
       .then(callback)
       .catch(logError);
   },
+  deleteCard: function(cardId, callback) {
+    console.log(cardId);
+    return axios
+      .delete(routes.deleteCardUrl(cardId))
+      .then(unwrapData)
+      .then(callback)
+      .catch(logError);
+  },
   createComment: function(cardId, text, callback) {
     return axios
       .post(routes.CREATE_COMMENT_URL, { cardId, text })

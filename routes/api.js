@@ -4,6 +4,8 @@ const Board = require("../models/board");
 const List = require("../models/list");
 const Card = require("../models/card");
 const Comment = require("../models/comment");
+const Action = require("../models/action");
+const parseCardChange = require("../helpers/helpers");
 
 router.get("/boards", (req, res, next) => {
   Board.find({}, "title")
@@ -152,6 +154,9 @@ router.get("/cards/:id", (req, res, next) => {
       },
       {
         path: "comments"
+      },
+      {
+        path: "actions"
       }
     ])
     .then(card => {
@@ -169,7 +174,7 @@ router.get("/cards/:id", (req, res, next) => {
 router.put("/cards/:id", (req, res, next) => {
   const cardId = req.params.id;
   const { attrs } = req.body;
-  let originalCard;
+  let actionObj;
 
   Card.findById(cardId)
     .populate({
@@ -183,14 +188,34 @@ router.put("/cards/:id", (req, res, next) => {
         throw new Error("Card doesn't exist.");
       }
 
-      originalCard = card;
-      return Card.findByIdAndUpdate(
-        cardId,
-        {
-          ...attrs
-        },
-        { new: true }
-      );
+      let actionMessage = parseCardChange(attrs);
+
+      if (actionMessage) {
+        return Action.create({
+          description: actionMessage,
+          cardId: cardId
+        });
+      }
+    })
+    .then(action => {
+      if (action) {
+        return Card.findByIdAndUpdate(
+          cardId,
+          {
+            ...attrs,
+            $push: { actions: action._id }
+          },
+          { new: true }
+        ).populate(["actions"]);
+      } else {
+        return Card.findByIdAndUpdate(
+          cardId,
+          {
+            ...attrs
+          },
+          { new: true }
+        ).populate(["actions"]);
+      }
     })
     .then(card => {
       res.json({
@@ -216,7 +241,6 @@ router.post("/comments", (req, res, next) => {
       });
     })
     .then(result => {
-      console.log(result);
       newComment = result;
       return Card.findByIdAndUpdate(cardId, {
         $addToSet: { comments: result._id }
@@ -226,6 +250,41 @@ router.post("/comments", (req, res, next) => {
       res.json({ newComment });
     })
     .catch(err => next(err));
+});
+
+router.delete("/cards/:id", (req, res, next) => {
+  const cardId = req.params.id;
+  let deletedCard;
+
+  Card.findById(cardId)
+    .populate({
+      path: "list",
+      populate: {
+        path: "board"
+      }
+    })
+    .then(card => {
+      if (!card) {
+        throw new Error("Card doesn't exist");
+      }
+
+      return Card.findByIdAndRemove(cardId);
+    })
+    .then(result => {
+      deletedCard = result;
+      return List.updateOne(
+        { cards: { $in: [deletedCard._id] } },
+        {
+          $pull: { cards: deletedCard._id }
+        }
+      );
+    })
+    .then(() => {
+      res.json({
+        card: deletedCard
+      });
+    })
+    .catch(error => next(error));
 });
 
 module.exports = router;

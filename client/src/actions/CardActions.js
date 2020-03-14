@@ -67,8 +67,8 @@ export function updateCard(cardId, attrs, callback) {
 export function deleteCard(cardId, callback) {
   return function(dispatch) {
     dispatch(deleteCardRequest());
-    apiClient.deleteCard(cardId, () => {
-      dispatch(deleteCardSuccess(cardId));
+    apiClient.deleteCard(cardId, data => {
+      dispatch(deleteCardSuccess(data.card._id));
       if (callback) callback();
     });
   };

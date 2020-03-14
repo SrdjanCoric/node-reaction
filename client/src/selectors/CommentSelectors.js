@@ -11,7 +11,9 @@ export function cardComments(state, cardId, sortFunction) {
 export function cardCommentsAndActions(state, cardId, sortFunction) {
   const comments = cardComments(state, cardId);
   const actions = state.actions
-    .filter(action => action.card_id === cardId)
+    .filter(action => {
+      return action.cardId === cardId;
+    })
     .map(action => ({ ...action, isAction: true }));
 
   if (typeof sortFunction === "function") {
