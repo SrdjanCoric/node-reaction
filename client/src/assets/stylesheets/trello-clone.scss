@@ -409,6 +409,95 @@ nav > ul > li + li {
   padding-bottom: 6px;
   display: block;
 }
+
+.login-wrap {
+  position: relative;
+  margin: 0 auto;
+  background: #ecf0f1;
+  width: 350px;
+  border-radius: 5px;
+  box-shadow: 3px 3px 10px #333;
+  padding: 15px;
+  top: 75px;
+
+  h2 {
+    text-align: center;
+    font-weight: 200;
+    font-size: 2em;
+    margin-top: 10px;
+    color: #34495e;
+  }
+
+  .form {
+    padding-top: 20px;
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    button {
+      width: 80%;
+      margin-left: 10%;
+      margin-bottom: 25px;
+      height: 40px;
+      border-radius: 5px;
+      outline: 0;
+      -moz-outline-style: none;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+      border: 1px solid #bbb;
+      padding: 0 0 0 10px;
+      font-size: 14px;
+      &:focus {
+        border: 1px solid #3498db;
+      }
+    }
+
+    a {
+      text-align: center;
+      font-size: 12px;
+      color: #3498db;
+
+      p {
+        padding-bottom: 10px;
+      }
+    }
+
+    button {
+      background: #0079bf;
+      border: none;
+      color: white;
+      font-size: 18px;
+      font-weight: 200;
+      cursor: pointer;
+      transition: box-shadow 0.4s ease;
+
+      &:hover {
+        box-shadow: 1px 1px 5px #555;
+      }
+
+      &:active {
+        box-shadow: 1px 1px 7px #222;
+      }
+    }
+  }
+}
+
+.login-nav {
+  float: right;
+}
+.login-nav a {
+  text-decoration: none;
+  color: white;
+}
+.login-nav a li {
+  width: 60px;
+  padding: 0;
+  text-align: center;
+}
+
 .shifted main,
 .shifted header,
 .shifted .menu-sidebar {

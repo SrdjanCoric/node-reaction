@@ -15,14 +15,21 @@ import DueDatePopover from "./ui/DueDatePopover";
 import LabelsPopover from "./ui/LabelsPopover";
 import MoveCardPopover from "./ui/MoveCardPopover";
 import SingleBoard from "./ui/SingleBoard";
+import AuthLayer from "./user/AuthLayer";
+import SignUp from "./user/SignUp";
 
 const Application = () => {
   return (
     <div>
       <TopNav />
-      <Route path="/" exact component={BoardsDashboardContainer} />
+      <Route
+        path="/"
+        exact
+        component={() => <AuthLayer isLoggedIn={false} />}
+      />
       <Route path="/(boards|cards)/:id" component={BoardContainer} />
       <Route path="/cards/:id" component={CardModalContainer} />
+      <Route path="/signUp" component={SignUp} />
       <Route path="/ui" exact component={UISection} />
       <Route path="/ui/allBoards" component={AllBoards} />
       <Route path="/ui/cardArchived" component={CardArchived} />

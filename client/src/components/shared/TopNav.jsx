@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const TopNav = () => (
+const TopNav = props => (
   <nav>
     <ul>
       <li className="boards trello-icon icon">
@@ -21,13 +21,26 @@ const TopNav = () => (
       </li>
     </ul>
     <h1>Trello</h1>
-    <ul className="user-info">
-      <li className="create-icon icon"></li>
-      <li className="split-button-1">VR</li>
-      <li className="split-button-2">Victor Reyes</li>
-      <li className="info-icon icon"></li>
-      <li className="notifications-icon icon"></li>
-    </ul>
+    {props.loggedIn ? (
+      <ul className="user-info">
+        <li className="create-icon icon"></li>
+        <li className="split-button-1">VR</li>
+        <li className="split-button-2">Victor Reyes</li>
+        <li className="info-icon icon"></li>
+        <li className="notifications-icon icon"></li>
+      </ul>
+    ) : (
+      <ul className="login-nav">
+        <li>
+          <Link to="/">Log in</Link>
+        </li>
+
+        <li>
+          {" "}
+          <Link to="/signUp">Sign Up</Link>
+        </li>
+      </ul>
+    )}
   </nav>
 );
 
