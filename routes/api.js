@@ -5,7 +5,44 @@ const List = require("../models/list");
 const Card = require("../models/card");
 const Comment = require("../models/comment");
 const Action = require("../models/action");
+const User = require("../models/user");
 const parseCardChange = require("../helpers/helpers");
+
+router.post("/login", (req, res, next) => {
+  const { user } = req.body;
+  return User.findOne({ email: user.email }).then(userDb => {
+    if (!userDb) {
+      throw new Error("Could not find user");
+    } else if (userDb.password !== user.password) {
+      throw new Error("Invalid Password");
+    }
+    return User.findById(userDb._id)
+      .populate({
+        path: "boards",
+        populate: {
+          path: "lists",
+          populate: {
+            path: "cards"
+          }
+        }
+      })
+      .then(data => {
+        res.json(data);
+      })
+      .catch(error => next(error));
+  });
+});
+
+router.post("/signup", (req, res, next) => {
+  const { user } = req.body;
+  if (user.fullName && user.email && user.password) {
+    User.create(user)
+      .then(data => res.json(data))
+      .catch(next);
+  } else {
+    res.json({ error: "All fields have to be filled" });
+  }
+});
 
 router.get("/boards", (req, res, next) => {
   Board.find({}, "title")

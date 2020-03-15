@@ -437,7 +437,7 @@ nav > ul > li + li {
     button {
       width: 80%;
       margin-left: 10%;
-      margin-bottom: 25px;
+      margin-bottom: 10px;
       height: 40px;
       border-radius: 5px;
       outline: 0;
@@ -457,11 +457,13 @@ nav > ul > li + li {
 
     a {
       text-align: center;
-      font-size: 12px;
-      color: #3498db;
+      font-size: 18px;
+      color: white;
 
       p {
         padding-bottom: 10px;
+        color: #0079bf;
+        font-size: 12px;
       }
     }
 
@@ -483,6 +485,16 @@ nav > ul > li + li {
       }
     }
   }
+}
+
+.input-feedback {
+  color: rgb(235, 54, 54);
+  width: 80%;
+  margin-left: 12%;
+  margin-bottom: 20px;
+  height: 10px;
+  border-radius: 5px;
+  margin-top: 5px;
 }
 
 .login-nav {

@@ -1,4 +1,4 @@
-export default function actionsReducer(state = [], action) {
+export default function actions(state = [], action) {
   if (action.type === "FETCH_CARD_SUCCESS") {
     const actions = action.payload.card.actions;
     const filteredActions = state.filter(

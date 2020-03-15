@@ -93,6 +93,20 @@ const apiClient = {
       .then(unwrapData)
       .then(callback)
       .catch(logError);
+  },
+  login: function(user, callback) {
+    return axios
+      .post(routes.LOGIN, { user })
+      .then(unwrapData)
+      .then(callback)
+      .catch(logError);
+  },
+  signup: function(user, callback) {
+    return axios
+      .post(routes.SIGNUP, { user })
+      .then(unwrapData)
+      .then(callback)
+      .catch(logError);
   }
 };
 

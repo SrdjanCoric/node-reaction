@@ -1,7 +1,6 @@
 import React from "react";
-import { Route } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import TopNav from "./shared/TopNav";
-import BoardsDashboardContainer from "./dashboard/BoardsDashboardContainer";
 import BoardContainer from "./board/BoardContainer";
 import CardModalContainer from "./card/CardModalContainer";
 import UISection from "./ui/UISection";
@@ -15,21 +14,24 @@ import DueDatePopover from "./ui/DueDatePopover";
 import LabelsPopover from "./ui/LabelsPopover";
 import MoveCardPopover from "./ui/MoveCardPopover";
 import SingleBoard from "./ui/SingleBoard";
-import AuthLayer from "./user/AuthLayer";
-import SignUp from "./user/SignUp";
+import SignupContainer from "./user/SignupContainer";
+import LoginContainer from "./user/LoginContainer";
 
-const Application = () => {
+const Application = props => {
   return (
     <div>
-      <TopNav />
+      <TopNav user={props.user} />
       <Route
         path="/"
         exact
-        component={() => <AuthLayer isLoggedIn={false} />}
+        render={() => <LoginContainer user={props.user} />}
       />
       <Route path="/(boards|cards)/:id" component={BoardContainer} />
       <Route path="/cards/:id" component={CardModalContainer} />
-      <Route path="/signUp" component={SignUp} />
+      <Route
+        path="/signup"
+        render={() => <SignupContainer user={props.user} />}
+      />
       <Route path="/ui" exact component={UISection} />
       <Route path="/ui/allBoards" component={AllBoards} />
       <Route path="/ui/cardArchived" component={CardArchived} />
