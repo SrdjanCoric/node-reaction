@@ -8,7 +8,6 @@ const Action = require("../models/action");
 const parseCardChange = require("../helpers/helpers");
 
 router.get("/boards", (req, res, next) => {
-  console.log("in boards");
   Board.find({}, "title")
     .then(data => res.json(data))
     .catch(next);
