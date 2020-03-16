@@ -13,8 +13,8 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onUpdateCard: (cardId, updatedCard, callback) => {
-      dispatch(actions.updateCard(cardId, updatedCard, callback));
+    onUpdateCard: (token, cardId, updatedCard, callback) => {
+      dispatch(actions.updateCard(token, cardId, updatedCard, callback));
     }
   };
 };

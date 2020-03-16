@@ -1,5 +1,11 @@
 {
   "name": "reaction_node",
+  "proxy": {
+    "/sessions": {
+      "target": "https://localhost:5000",
+      "secure": false
+    }
+  },
   "version": "1.0.0",
   "description": "building reaction app using mongodb, express, react and nodejs",
   "main": "index.js",
@@ -15,11 +21,13 @@
     "bcrypt": "^4.0.1",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.4.1",
+    "cookie-parser": "^1.4.5",
     "debounce": "^1.2.0",
     "dotenv": "^6.1.0",
     "express": "^4.16.4",
     "formik": "^2.1.4",
     "jquery": "^3.4.1",
+    "jsonwebtoken": "^8.5.1",
     "mdbreact": "^4.25.3",
     "moment": "^2.24.0",
     "mongoose": "^5.3.6",

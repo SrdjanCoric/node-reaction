@@ -126,12 +126,14 @@ const CardModal = props => {
                 description={props.card.description}
                 onUpdateCard={props.onUpdateCard}
                 card={props.card}
+                user={props.user}
               />
             </li>
             <li className="comment-section">
               <NewCommentFormContainer
                 cardId={props.card._id}
                 onSubmit={props.onCreateComment}
+                user={props.user}
               />
             </li>
             <li className="activity-section">

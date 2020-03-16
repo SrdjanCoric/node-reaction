@@ -24,7 +24,9 @@ const Application = props => {
       <Route
         path="/"
         exact
-        render={() => <LoginContainer user={props.user} />}
+        render={() => (
+          <LoginContainer user={props.user} loading={props.loading} />
+        )}
       />
       <Route path="/(boards|cards)/:id" component={BoardContainer} />
       <Route path="/cards/:id" component={CardModalContainer} />

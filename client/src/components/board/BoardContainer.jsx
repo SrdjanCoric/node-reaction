@@ -1,6 +1,9 @@
+import React from "react";
 import { connect } from "react-redux";
-import * as actions from "../../actions/BoardActions";
+import * as boardActions from "../../actions/BoardActions";
 import Board from "./Board";
+import { Redirect } from "react-router-dom";
+import * as userActions from "../../actions/UserActions";
 
 const mapStateToProps = (state, ownProps) => {
   let boardId;
@@ -20,23 +23,65 @@ const mapStateToProps = (state, ownProps) => {
     return {
       board: state.boards.find(board => board._id === boardId),
       card: card,
-      boardId: boardId
+      boardId: boardId,
+      user: state.user,
+      loading: state.loading
     };
   } else {
     return {
       board: null,
       card: card,
-      boardId: boardId
+      boardId: boardId,
+      user: state.user,
+      loading: state.loading
     };
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchBoard: (boardId, callback) => {
-      dispatch(actions.fetchBoard(boardId, callback));
+    onFetchBoard: (token, boardId, callback) => {
+      dispatch(boardActions.fetchBoard(token, boardId, callback));
+    },
+    onFetchUser: token => {
+      dispatch(userActions.fetchUser(token));
     }
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Board);
+class BoardContainer extends React.Component {
+  componentDidMount() {
+    let token = sessionStorage.getItem("jwtToken");
+    this.props.onFetchUser(token);
+  }
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.user.isLoggedIn !== this.props.user.isLoggedIn &&
+      !this.props.user.isLoggedIn
+    ) {
+      let token = sessionStorage.getItem("jwtToken");
+      this.props.onFetchUser(token);
+    }
+  }
+  render() {
+    if (this.props.user.invalidUser) {
+      return <Redirect to="/" />;
+    } else if (this.props.user.isLoggedIn) {
+      return (
+        <Board
+          board={this.props.board}
+          card={this.props.card}
+          boardId={this.props.boardId}
+          user={this.props.user}
+          loading={this.props.loading}
+          match={this.props.match}
+          onFetchBoard={this.props.onFetchBoard}
+        />
+      );
+    } else {
+      return null;
+    }
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BoardContainer);

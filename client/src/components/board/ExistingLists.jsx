@@ -54,6 +54,7 @@ class ExistingLists extends React.Component {
       this.cardDrake.cancel(true);
 
       this.props.onUpdateCard(
+        this.props.state.user.token,
         cardId,
         {
           position: newPosition,

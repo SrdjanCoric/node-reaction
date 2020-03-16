@@ -9,10 +9,10 @@ export function createCommentSuccess(comment) {
   return { type: types.CREATE_COMMENT_SUCCESS, payload: { comment } };
 }
 
-export function createComment(cardId, text, callback) {
+export function createComment(token, cardId, text, callback) {
   return function(dispatch) {
     dispatch(createCommentRequest());
-    apiClient.createComment(cardId, text, data => {
+    apiClient.createComment(token, cardId, text, data => {
       dispatch(createCommentSuccess(data.newComment));
       if (callback) callback(data.newComment);
     });

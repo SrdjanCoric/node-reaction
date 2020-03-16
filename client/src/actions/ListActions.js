@@ -20,10 +20,10 @@ export function updateListSuccess(listId, newList) {
   };
 }
 
-export function createList(boardId, title, position, callback) {
+export function createList(token, boardId, title, position, callback) {
   return function(dispatch) {
     dispatch(createListRequest());
-    apiClient.createList(boardId, title, position, data => {
+    apiClient.createList(token, boardId, title, position, data => {
       dispatch(createListSuccess(data.newList));
       if (callback) {
         callback(data.newList);
@@ -32,10 +32,10 @@ export function createList(boardId, title, position, callback) {
   };
 }
 
-export function updateList(listId, list, callback) {
+export function updateList(token, listId, list, callback) {
   return function(dispatch) {
     dispatch(updateListRequest());
-    apiClient.updateList(listId, list, data => {
+    apiClient.updateList(token, listId, list, data => {
       dispatch(updateListSuccess(listId, data.updatedList));
       if (callback) {
         callback(data.updatedList);

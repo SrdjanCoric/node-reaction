@@ -33,10 +33,10 @@ export function deleteCardSuccess(cardId) {
   return { type: types.DELETE_CARD_SUCCESS, payload: { cardId } };
 }
 
-export function createCard(listId, card, callback) {
+export function createCard(token, listId, card, callback) {
   return function(dispatch) {
     dispatch(createCardRequest);
-    apiClient.createCard(listId, card, data => {
+    apiClient.createCard(token, listId, card, data => {
       dispatch(createCardSuccess(data.newCard));
       if (callback) {
         callback(data.newCard);
@@ -45,29 +45,29 @@ export function createCard(listId, card, callback) {
   };
 }
 
-export function fetchCard(id) {
+export function fetchCard(token, id) {
   return function(dispatch) {
     dispatch(fetchCardRequest());
-    apiClient.getCard(id, data => {
+    apiClient.getCard(token, id, data => {
       dispatch(fetchCardSuccess(data.card));
     });
   };
 }
 
-export function updateCard(cardId, attrs, callback) {
+export function updateCard(token, cardId, attrs, callback) {
   return function(dispatch) {
     dispatch(updateCardRequest());
-    apiClient.updateCard(cardId, attrs, data => {
+    apiClient.updateCard(token, cardId, attrs, data => {
       dispatch(updateCardSuccess(data.card));
       if (callback) callback(data.card);
     });
   };
 }
 
-export function deleteCard(cardId, callback) {
+export function deleteCard(token, cardId, callback) {
   return function(dispatch) {
     dispatch(deleteCardRequest());
-    apiClient.deleteCard(cardId, data => {
+    apiClient.deleteCard(token, cardId, data => {
       dispatch(deleteCardSuccess(data.card._id));
       if (callback) callback();
     });

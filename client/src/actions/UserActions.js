@@ -5,15 +5,19 @@ export function loginRequest() {
   return { type: types.LOGIN_REQUEST };
 }
 
-export function loginSuccess(user) {
-  return { type: types.LOGIN_SUCCESS, payload: { user } };
+export function loginSuccess(data) {
+  return {
+    type: types.LOGIN_SUCCESS,
+    payload: { token: data.token, user: data.user }
+  };
 }
 
 export function login(user, callback) {
   return function(dispatch) {
     dispatch(loginRequest());
-    apiClient.login(user, userDb => {
-      dispatch(loginSuccess(userDb));
+    apiClient.login(user, data => {
+      sessionStorage.setItem("jwtToken", data.token);
+      dispatch(loginSuccess(data));
       if (callback) callback();
     });
   };
@@ -23,16 +27,58 @@ export function signUpRequest() {
   return { type: types.SIGNUP_REQUEST };
 }
 
-export function signUpSuccess(user) {
-  return { type: types.SIGNUP_SUCCESS, payload: { user } };
+export function signUpSuccess(data) {
+  return {
+    type: types.SIGNUP_SUCCESS,
+
+    payload: { token: data.token, user: data.user }
+  };
+}
+
+export function fetchUserRequest() {
+  return { type: "FETCH_USER_REQUEST" };
+}
+
+export function fetchUserSuccess(data) {
+  return {
+    type: "FETCH_USER_SUCCESS",
+
+    payload: { token: data.token, user: data.user }
+  };
+}
+
+export function invalidUser() {
+  return {
+    type: "INVALID_USER"
+  };
 }
 
 export function signup(user, callback) {
   return function(dispatch) {
     dispatch(signUpRequest());
-    apiClient.signup(user, userDb => {
-      dispatch(signUpSuccess(userDb));
+    apiClient.signup(user, data => {
+      sessionStorage.setItem("jwtToken", data.token);
+      dispatch(signUpSuccess(data));
       if (callback) callback();
     });
+  };
+}
+
+export function fetchUser(token) {
+  return function(dispatch) {
+    dispatch(fetchUserRequest());
+    apiClient.fetchUser(
+      token,
+      data => {
+        if (data.token) {
+          dispatch(fetchUserSuccess(data));
+        } else {
+          sessionStorage.removeItem("jwtToken");
+        }
+      },
+      () => {
+        dispatch(invalidUser());
+      }
+    );
   };
 }

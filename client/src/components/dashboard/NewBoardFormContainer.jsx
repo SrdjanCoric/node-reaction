@@ -3,10 +3,16 @@ import { connect } from "react-redux";
 import NewBoardForm from "./NewBoardForm";
 import * as actions from "../../actions/BoardActions";
 
+const mapStateToProps = state => {
+  return {
+    user: state.user
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
-    onSubmit: (newBoard, callback) => {
-      dispatch(actions.createBoard(newBoard));
+    onSubmit: (token, newBoard, callback) => {
+      dispatch(actions.createBoard(token, newBoard));
       callback();
     }
   };
@@ -28,7 +34,7 @@ class NewBoardFormContainer extends React.Component {
 
     const newBoard = { title: this.state.title };
 
-    this.props.onSubmit(newBoard, () => {
+    this.props.onSubmit(this.props.user.token, newBoard, () => {
       this.setState({
         title: ""
       });
@@ -49,6 +55,6 @@ class NewBoardFormContainer extends React.Component {
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(NewBoardFormContainer);

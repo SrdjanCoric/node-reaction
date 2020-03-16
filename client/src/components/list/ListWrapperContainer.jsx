@@ -38,9 +38,10 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
       const droppedList = sortedStartingList.find(list => list.id === listId);
       const sourceIndex = sortedStartingList.indexOf(droppedList);
       const newPosition = calculatePosition(lists, targetIndex, sourceIndex);
-
       dispatchProps.dispatch(
-        actions.updateList(ownProps._id, { position: newPosition })
+        actions.updateList(stateProps.state.user.token, ownProps._id, {
+          position: newPosition
+        })
       );
     }
   };

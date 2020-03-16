@@ -24,13 +24,16 @@ const mergeStateToProps = (stateProps, dispatchProps, ownProps) => {
   let targetPosition = listsFromBoard.length;
   let position = calculatePosition(listsFromBoard, targetPosition);
   return {
-    onSubmit: title => {
+    onSubmit: (token, title) => {
       try {
-        dispatchProps.dispatch(actions.createList(boardId, title, position));
+        dispatchProps.dispatch(
+          actions.createList(token, boardId, title, position)
+        );
       } catch (e) {
         console.error(e);
       }
     },
+    user: stateProps.state.user,
     ...ownProps
   };
 };
@@ -63,7 +66,7 @@ class AddListContainer extends React.Component {
   handleSubmit = e => {
     e.stopPropagation();
     e.preventDefault();
-    this.props.onSubmit(this.state.title);
+    this.props.onSubmit(this.props.user.token, this.state.title);
     this.handleClose(e);
     this.setState({ title: "" });
   };

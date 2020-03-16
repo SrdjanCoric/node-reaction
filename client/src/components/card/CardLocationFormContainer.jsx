@@ -23,17 +23,18 @@ const mapStateToProps = (state, ownProps) => {
     cards: cardSelectors
       .listCards(state, ownProps.card.listId)
       .sort((a, b) => a.position - b.position),
-    state: state
+    state: state,
+    user: state.user
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    onFetchBoards: callback => {
-      dispatch(fetchBoards(callback));
+    onFetchBoards: (token, callback) => {
+      dispatch(fetchBoards(token, callback));
     },
-    onFetchBoard: (id, callback) => {
-      dispatch(fetchBoard(id, callback));
+    onFetchBoard: (token, id, callback) => {
+      dispatch(fetchBoard(token, id, callback));
     }
   };
 };
@@ -49,7 +50,7 @@ class CardLocationFormContainer extends React.Component {
   };
 
   componentDidMount() {
-    this.props.onFetchBoards();
+    this.props.onFetchBoards(this.props.user.token);
     this.setState(
       {
         selectedBoard: this.props.boards.find(board => {
@@ -93,7 +94,7 @@ class CardLocationFormContainer extends React.Component {
   };
 
   selectBoard = id => {
-    this.props.onFetchBoard(id, board => {
+    this.props.onFetchBoard(this.props.user.token, id, board => {
       const newLists = board.lists.sort(sortByTitle);
       console.log(board);
       this.setState(

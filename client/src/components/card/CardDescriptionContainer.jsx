@@ -13,6 +13,7 @@ class CardDescriptionContainer extends React.Component {
 
   handleSaveDescription = () => {
     this.props.onUpdateCard(
+      this.props.user.token,
       this.props.card._id,
       {
         description: this.state.description

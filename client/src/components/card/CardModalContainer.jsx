@@ -23,20 +23,22 @@ const mapStateToProps = (state, ownProps) => {
   return {
     card,
     list,
-    comments
+    comments,
+    user: state.user
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onFetchCard: () => dispatch(actions.fetchCard(ownProps.match.params.id)),
-    onUpdateCard: (id, attrs, callback) => {
-      dispatch(actions.updateCard(id, attrs, callback));
+    onFetchCard: token =>
+      dispatch(actions.fetchCard(token, ownProps.match.params.id)),
+    onUpdateCard: (token, id, attrs, callback) => {
+      dispatch(actions.updateCard(token, id, attrs, callback));
     },
-    onCreateComment: (cardId, comment, callback) =>
-      dispatch(createComment(cardId, comment, callback)),
-    onDeleteCard: (cardId, callback) => {
-      dispatch(actions.deleteCard(cardId, callback));
+    onCreateComment: (token, cardId, comment, callback) =>
+      dispatch(createComment(token, cardId, comment, callback)),
+    onDeleteCard: (token, cardId, callback) => {
+      dispatch(actions.deleteCard(token, cardId, callback));
     }
   };
 };
@@ -53,7 +55,7 @@ class CardModalContainer extends React.Component {
   };
 
   componentDidMount() {
-    this.props.onFetchCard(newCard => {
+    this.props.onFetchCard(this.props.user.token, newCard => {
       this.updateCardInState(newCard);
     });
   }
@@ -71,7 +73,9 @@ class CardModalContainer extends React.Component {
   handleTitleBlur = e => {
     e.preventDefault();
 
-    this.props.onUpdateCard(this.state.card._id, { title: this.state.title });
+    this.props.onUpdateCard(this.props.user.token, this.state.card._id, {
+      title: this.state.title
+    });
   };
 
   updateCardInState = newCard => {
@@ -82,7 +86,7 @@ class CardModalContainer extends React.Component {
   };
 
   handleToggleArchive = () => {
-    this.props.onUpdateCard(this.props.card._id, {
+    this.props.onUpdateCard(this.props.user.token, this.props.card._id, {
       archived: !this.props.card.archived
     });
   };
@@ -90,7 +94,7 @@ class CardModalContainer extends React.Component {
   handleToggleCompleted = e => {
     e.preventDefault();
     e.stopPropagation();
-    this.props.onUpdateCard(this.props.card._id, {
+    this.props.onUpdateCard(this.props.user.token, this.props.card._id, {
       completed: !this.state.card.completed
     });
   };
@@ -130,6 +134,7 @@ class CardModalContainer extends React.Component {
     const dateTime = `${date} ${time}`;
 
     this.props.onUpdateCard(
+      this.props.user.token,
       this.state.card._id,
       { dueDate: moment(dateTime, "M/D/YYYY h:mm A").toISOString() },
       () => {
@@ -141,6 +146,7 @@ class CardModalContainer extends React.Component {
   handleDueDateRemove = e => {
     e.preventDefault();
     this.props.onUpdateCard(
+      this.props.user.token,
       this.state.card._id,
       { dueDate: null, completed: false },
       () => {
@@ -159,11 +165,13 @@ class CardModalContainer extends React.Component {
       labels = currentLabels.filter(currentLabel => currentLabel !== label);
     }
 
-    this.props.onUpdateCard(this.state.card._id, { labels });
+    this.props.onUpdateCard(this.props.user.token, this.state.card._id, {
+      labels
+    });
   };
 
   handleDeleteCard = e => {
-    this.props.onDeleteCard(this.props.card._id);
+    this.props.onDeleteCard(this.props.user.token, this.props.card._id);
   };
 
   popoverChildren() {
@@ -211,6 +219,7 @@ class CardModalContainer extends React.Component {
       return (
         <>
           <CardModal
+            user={this.props.user}
             title={this.state.title}
             card={this.state.card}
             list={this.props.list}

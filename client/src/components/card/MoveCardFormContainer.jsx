@@ -15,8 +15,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onUpdateCard: (cardId, card, callback) => {
-      dispatch(actions.updateCard(cardId, card, callback));
+    onUpdateCard: (token, cardId, card, callback) => {
+      dispatch(actions.updateCard(token, cardId, card, callback));
     }
   };
 };
@@ -58,6 +58,7 @@ class MoveCardFormContainer extends Component {
     );
 
     this.props.onUpdateCard(
+      this.props.state.user.token,
       this.props.card._id,
       {
         listId: listId,
