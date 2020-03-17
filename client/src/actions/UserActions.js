@@ -82,3 +82,9 @@ export function fetchUser(token) {
     );
   };
 }
+
+export function noUser() {
+  return function(dispatch) {
+    dispatch(invalidUser());
+  };
+}

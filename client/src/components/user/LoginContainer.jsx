@@ -11,6 +11,9 @@ const mapDispatchToProps = dispatch => {
     },
     onFetchUser: token => {
       dispatch(actions.fetchUser(token));
+    },
+    onInvalidUser: () => {
+      dispatch(actions.noUser());
     }
   };
 };
@@ -19,6 +22,7 @@ class LoginContainer extends React.Component {
   componentDidMount() {
     let token = sessionStorage.getItem("jwtToken");
     if (!token || token === "") {
+      this.props.onInvalidUser();
       return;
     }
     this.props.onFetchUser(token);
