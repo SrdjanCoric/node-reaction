@@ -1,10 +1,15 @@
 export default function user(state = false, action) {
-  if (action.type === "FETCH_USER_REQUEST") {
-    return true;
-  } else if (action.type === "FETCH_USER_SUCCESS") {
-    return false;
-  } else if (action.type === "INVALID_USER") {
-    return false;
+  switch (action.type) {
+    case "FETCH_USER_REQUEST":
+      return true;
+    case "FETCH_USER_SUCCESS":
+      return false;
+    case "INVALID_USER":
+      return false;
+    case "FETCH_BOARDS_REQUEST":
+      return true;
+    case "FETCH_BOARDS_SUCCESS":
+      return false;
   }
   return state;
 }

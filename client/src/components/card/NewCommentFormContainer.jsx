@@ -4,9 +4,10 @@ import * as actions from "../../actions/CommentActions";
 import NewCommentForm from "./NewCommentForm";
 
 const mapDispatchToProps = (dispatch, ownProps) => {
+  let token = sessionStorage.getItem("jwtToken");
   return {
     onSubmit: (text, callback) => {
-      dispatch(actions.createComment(ownProps.cardId, text, callback));
+      dispatch(actions.createComment(token, ownProps.cardId, text, callback));
     }
   };
 };

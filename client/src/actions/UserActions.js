@@ -15,11 +15,17 @@ export function loginSuccess(data) {
 export function login(user, callback) {
   return function(dispatch) {
     dispatch(loginRequest());
-    apiClient.login(user, data => {
-      sessionStorage.setItem("jwtToken", data.token);
-      dispatch(loginSuccess(data));
-      if (callback) callback();
-    });
+    apiClient.login(
+      user,
+      data => {
+        sessionStorage.setItem("jwtToken", data.token);
+        dispatch(loginSuccess(data));
+        if (callback) callback();
+      },
+      () => {
+        dispatch(invalidUser());
+      }
+    );
   };
 }
 

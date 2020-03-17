@@ -64,7 +64,7 @@ class CardModalContainer extends React.Component {
     if (!this.props.user) {
       this.props.onFetchUser(token);
     } else {
-      this.props.onFetchCard(this.props.user.token, newCard => {
+      this.props.onFetchCard(token, newCard => {
         this.updateCardInState(newCard);
       });
     }

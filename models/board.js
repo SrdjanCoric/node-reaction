@@ -16,7 +16,11 @@ const BoardSchema = new Schema(
         type: ObjectId,
         ref: "List"
       }
-    ]
+    ],
+    userId: {
+      type: ObjectId,
+      ref: "User"
+    }
   },
   { timestamps: true }
 );

@@ -8,6 +8,36 @@ const TopNav = props => {
       .map(name => name[0].toUpperCase())
       .join("");
   };
+
+  let nav;
+  if (props.user.isLoggedIn) {
+    nav = (
+      <ul className="user-info">
+        <li className="create-icon icon"></li>
+        <li className="split-button-1">
+          {createAbbreviation(props.user.fullName)}
+        </li>
+        <li className="split-button-2">{props.user.fullName}</li>
+        <li className="info-icon icon"></li>
+        <li className="notifications-icon icon"></li>
+      </ul>
+    );
+  } else if (props.loading) {
+    nav = null;
+  } else {
+    nav = (
+      <ul className="login-nav">
+        <li>
+          <Link to="/">Log in</Link>
+        </li>
+
+        <li>
+          {" "}
+          <Link to="/signup">Sign Up</Link>
+        </li>
+      </ul>
+    );
+  }
   return (
     <nav>
       <ul>
@@ -28,28 +58,7 @@ const TopNav = props => {
         </li>
       </ul>
       <h1>Trello</h1>
-      {props.user.isLoggedIn ? (
-        <ul className="user-info">
-          <li className="create-icon icon"></li>
-          <li className="split-button-1">
-            {createAbbreviation(props.user.fullName)}
-          </li>
-          <li className="split-button-2">{props.user.fullName}</li>
-          <li className="info-icon icon"></li>
-          <li className="notifications-icon icon"></li>
-        </ul>
-      ) : (
-        <ul className="login-nav">
-          <li>
-            <Link to="/">Log in</Link>
-          </li>
-
-          <li>
-            {" "}
-            <Link to="/signup">Sign Up</Link>
-          </li>
-        </ul>
-      )}
+      {nav}
     </nav>
   );
 };

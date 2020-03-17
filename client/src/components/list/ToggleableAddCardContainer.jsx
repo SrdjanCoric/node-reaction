@@ -21,10 +21,16 @@ const mergeStateToProps = (stateProps, dispatchProps, ownProps) => {
   );
   let targetPosition = cardsFromList.length;
   let position = calculatePosition(cardsFromList, targetPosition);
+  let token = sessionStorage.getItem("jwtToken");
   return {
     onAddCard: (title, callback) => {
       dispatchProps.dispatch(
-        actions.createCard(ownProps.listId, { title, position }, callback)
+        actions.createCard(
+          token,
+          ownProps.listId,
+          { title, position },
+          callback
+        )
       );
     },
     ...ownProps

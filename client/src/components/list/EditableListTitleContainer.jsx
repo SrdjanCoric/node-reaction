@@ -5,7 +5,8 @@ import * as actions from "../../actions/ListActions";
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     onTitleUpdate: title => {
-      dispatch(actions.updateList(ownProps.listId, { title }));
+      let token = sessionStorage.getItem("jwtToken");
+      dispatch(actions.updateList(token, ownProps.listId, { title }));
     }
   };
 };

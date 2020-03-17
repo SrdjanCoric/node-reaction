@@ -20,7 +20,7 @@ import LoginContainer from "./user/LoginContainer";
 const Application = props => {
   return (
     <div>
-      <TopNav user={props.user} />
+      <TopNav user={props.user} loading={props.loading} />
       <Route
         path="/"
         exact

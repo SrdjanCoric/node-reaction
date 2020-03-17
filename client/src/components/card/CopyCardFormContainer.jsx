@@ -14,10 +14,10 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = dispatch => {
-  console.log("in dispatch");
+  let token = sessionStorage.getItem("jwtToken");
   return {
     onCreateCard: (listId, card, callback) => {
-      dispatch(actions.createCard(listId, card, callback));
+      dispatch(actions.createCard(token, listId, card, callback));
     }
   };
 };

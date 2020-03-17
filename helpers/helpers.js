@@ -67,4 +67,9 @@ const parseCardChange = (attrs, card) => {
   }
 };
 
+const checkUserBoardPermissions = (board, user) => {
+  return board.userId === user._id;
+};
+
 module.exports = parseCardChange;
+module.exports = checkUserBoardPermissions;

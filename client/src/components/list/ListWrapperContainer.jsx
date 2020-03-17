@@ -38,8 +38,9 @@ function mergeProps(stateProps, dispatchProps, ownProps) {
       const droppedList = sortedStartingList.find(list => list.id === listId);
       const sourceIndex = sortedStartingList.indexOf(droppedList);
       const newPosition = calculatePosition(lists, targetIndex, sourceIndex);
+      let token = sessionStorage.getItem("jwtToken");
       dispatchProps.dispatch(
-        actions.updateList(stateProps.state.user.token, ownProps._id, {
+        actions.updateList(token, ownProps._id, {
           position: newPosition
         })
       );

@@ -4,7 +4,6 @@ export default function user(
 ) {
   if (action.type === "LOGIN_SUCCESS") {
     const user = action.payload.user;
-    console.log("in login success", user);
     return {
       fullName: user.fullName,
       isLoggedIn: true,

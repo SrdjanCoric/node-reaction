@@ -33,6 +33,12 @@ export function deleteCardSuccess(cardId) {
   return { type: types.DELETE_CARD_SUCCESS, payload: { cardId } };
 }
 
+export function invalidUser() {
+  return {
+    type: "INVALID_USER"
+  };
+}
+
 export function createCard(token, listId, card, callback) {
   return function(dispatch) {
     dispatch(createCardRequest);
@@ -48,9 +54,16 @@ export function createCard(token, listId, card, callback) {
 export function fetchCard(token, id) {
   return function(dispatch) {
     dispatch(fetchCardRequest());
-    apiClient.getCard(token, id, data => {
-      dispatch(fetchCardSuccess(data.card));
-    });
+    apiClient.getCard(
+      token,
+      id,
+      data => {
+        dispatch(fetchCardSuccess(data.card));
+      },
+      () => {
+        dispatch(invalidUser());
+      }
+    );
   };
 }
 
