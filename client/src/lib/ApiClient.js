@@ -36,8 +36,13 @@ const apiClient = {
       .catch(logError);
   },
   createBoard: function(token, board, callback) {
-    return axios
-      .post(routes.CREATE_BOARD_URL, { board, token })
+    let config = {
+      method: "POST",
+      url: routes.CREATE_BOARD_URL,
+      data: { board },
+      headers: { Authorization: token }
+    };
+    return axios(config)
       .then(unwrapData)
       .then(callback)
       .catch(logError);
@@ -55,22 +60,37 @@ const apiClient = {
       .catch(res => logError(res, error));
   },
   createList: function(token, boardId, title, position, callback) {
-    return axios
-      .post(routes.CREATE_LIST_URL, { boardId, title, position, token })
+    let config = {
+      method: "POST",
+      url: routes.CREATE_LIST_URL,
+      data: { boardId, title, position },
+      headers: { Authorization: token }
+    };
+    return axios(config)
       .then(unwrapData)
       .then(callback)
       .catch(logError);
   },
   updateList: function(token, listId, list, callback) {
-    return axios
-      .put(routes.updateListUrl(listId), { list, token })
+    let config = {
+      method: "PUT",
+      url: routes.updateListUrl(listId),
+      data: { list },
+      headers: { Authorization: token }
+    };
+    return axios(config)
       .then(unwrapData)
       .then(callback)
       .catch(logError);
   },
   createCard: function(token, listId, card, callback) {
-    return axios
-      .post(routes.CREATE_CARD_URL, { listId, card, token })
+    let config = {
+      method: "POST",
+      url: routes.CREATE_CARD_URL,
+      data: { listId, card },
+      headers: { Authorization: token }
+    };
+    return axios(config)
       .then(unwrapData)
       .then(callback)
       .catch(logError);
@@ -88,8 +108,13 @@ const apiClient = {
       .catch(res => logError(res, error));
   },
   updateCard: function(token, cardId, attrs, callback) {
-    return axios
-      .put(routes.updateCardUrl(cardId), { attrs, token })
+    let config = {
+      method: "PUT",
+      url: routes.updateCardUrl(cardId),
+      data: { attrs },
+      headers: { Authorization: token }
+    };
+    return axios(config)
       .then(unwrapData)
       .then(callback)
       .catch(logError);
@@ -107,8 +132,13 @@ const apiClient = {
       .catch(logError);
   },
   createComment: function(token, cardId, text, callback) {
-    return axios
-      .post(routes.CREATE_COMMENT_URL, { cardId, text, token })
+    let config = {
+      method: "POST",
+      url: routes.CREATE_COMMENT_URL,
+      data: { cardId, text },
+      headers: { Authorization: token }
+    };
+    return axios(config)
       .then(unwrapData)
       .then(callback)
       .catch(logError);

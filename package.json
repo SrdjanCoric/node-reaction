@@ -17,7 +17,6 @@
   "author": "Ojini Jude",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.19.2",
     "bcrypt": "^4.0.1",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.4.1",
@@ -25,24 +24,13 @@
     "debounce": "^1.2.0",
     "dotenv": "^6.1.0",
     "express": "^4.16.4",
-    "formik": "^2.1.4",
     "jquery": "^3.4.1",
     "jsonwebtoken": "^8.5.1",
     "mdbreact": "^4.25.3",
-    "moment": "^2.24.0",
     "mongoose": "^5.3.6",
     "mongoose-unique-validator": "^2.0.3",
     "node-sass": "^4.13.1",
-    "pikaday": "^1.8.0",
-    "prettierrc": "^0.0.0-5",
-    "react-bootstrap": "^1.0.0-beta.17",
-    "react-dragula": "^1.1.17",
-    "react-redux": "^7.2.0",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "^3.4.0",
-    "redux": "^4.0.5",
-    "redux-thunk": "^2.3.0",
-    "yup": "^0.28.3"
+    "prettierrc": "^0.0.0-5"
   },
   "devDependencies": {
     "concurrently": "^4.0.1",
