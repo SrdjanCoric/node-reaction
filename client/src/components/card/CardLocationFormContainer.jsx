@@ -84,7 +84,6 @@ class CardLocationFormContainer extends React.Component {
 
   handleBoardChange = e => {
     const selectedValue = e.target.value;
-    console.log("here", selectedValue);
     this.selectBoard(selectedValue);
   };
 
@@ -96,7 +95,6 @@ class CardLocationFormContainer extends React.Component {
   selectBoard = id => {
     this.props.onFetchBoard(this.props.user.token, id, board => {
       const newLists = board.lists.sort(sortByTitle);
-      console.log(board);
       this.setState(
         {
           selectedBoard: board,

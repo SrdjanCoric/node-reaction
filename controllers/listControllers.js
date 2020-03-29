@@ -2,6 +2,7 @@ const List = require("../models/list");
 
 exports.findList = (req, res, next) => {
   const listId = req.body.listId || req.params.id;
+
   const user = req.user;
   List.findById(listId)
     .populate("board")
@@ -10,8 +11,8 @@ exports.findList = (req, res, next) => {
         throw new Error("List doesn't exist");
       }
       if (
-        !user.boards.some(boardId => {
-          return String(boardId) === String(list.boardId);
+        !user.boards.some(board => {
+          return String(board._id) === String(list.boardId);
         })
       ) {
         throw new Error("You are not allowed to do that");
@@ -43,15 +44,16 @@ exports.updateList = (req, res, next) => {
 };
 
 exports.addCardToList = (req, res, next) => {
-  const newCard = req.card;
+  const card = req.card;
+  const listId = req.list._id;
   List.findByIdAndUpdate(listId, {
-    $addToSet: { cards: newCard._id }
+    $addToSet: { cards: card._id }
   }).then(() => next());
 };
 
 exports.createList = (req, res, next) => {
   const { title, boardId, position } = req.body;
-  return List.create({
+  List.create({
     title: title || "New List",
     position: position || 65535,
     cards: [],

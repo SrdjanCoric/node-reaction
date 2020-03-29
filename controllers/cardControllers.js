@@ -1,40 +1,60 @@
 const Card = require("../models/card");
 
 exports.createCard = (req, res, next) => {
-  let { title, position, copyFrom, keep } = card;
+  let { title, position, copyFrom, keep } = req.body.card;
   const list = req.list;
   const listId = list._id;
   const boardId = list.boardId;
+  let copyCard = {};
   if (copyFrom) {
     Card.findById(copyFrom).then(card => {
       copyCard = card;
+      console.log("copyCard", copyCard);
+      Card.create({
+        labels: copyCard.labels,
+        dueDate: copyCard.dueDate,
+        title: copyCard.title,
+        description: copyCard.description,
+        listId: listId,
+        boardId: boardId,
+        archived: false,
+        position: position,
+        comments: keep ? copyCard.comments : [],
+        actions: copyCard.actions
+      }).then(card => {
+        console.log(card);
+        req.card = card;
+        next();
+      });
+    });
+  } else {
+    return Card.create({
+      labels: [],
+      dueDate: null,
+      title: title,
+      description: "",
+      listId: listId,
+      boardId: boardId,
+      archived: false,
+      position: position,
+      comments: [],
+      actions: []
+    }).then(card => {
+      req.card = card;
+      next();
     });
   }
-
-  Card.create({
-    labels: copyCard.labels || [],
-    dueDate: copyCard.dueDate || null,
-    title: copyCard.title || title,
-    description: copyCard.description,
-    listId: copyCard.listId || listId,
-    boardId: copyCard.boardId || boardId,
-    archived: false,
-    position: position,
-    comments: keep ? copyCard.comments : [],
-    actions: copyCard.actions || []
-  }).then(card => {
-    req.card = card;
-    next();
-  });
 };
 
 exports.updateCard = (req, res, next) => {
   const action = req.action;
-  const newCard = req.card;
+  const card = req.card;
+  const { attrs } = req.body;
   if (action) {
     Card.findByIdAndUpdate(
-      newCard._id,
+      card._id,
       {
+        ...attrs,
         $push: { actions: action._id }
       },
       { new: true }
@@ -46,7 +66,7 @@ exports.updateCard = (req, res, next) => {
       });
   } else {
     Card.findByIdAndUpdate(
-      cardId,
+      card._id,
       {
         ...attrs
       },
@@ -62,7 +82,7 @@ exports.updateCard = (req, res, next) => {
 
 exports.cardBelongsToUser = (req, res, next) => {
   const user = req.user;
-  const cardId = req.params.id;
+  const cardId = req.params.id || req.body.cardId;
   let cards = user.boards.reduce((cards, board) => {
     const { lists, boardWithoutLists } = board;
     let cardsToAdd = lists.reduce((listCards, list) => {
@@ -78,7 +98,7 @@ exports.cardBelongsToUser = (req, res, next) => {
 };
 
 exports.findCard = (req, res, next) => {
-  const cardId = req.params.id;
+  const cardId = req.params.id || req.body.cardId;
   Card.findById(cardId)
     .populate([
       {
@@ -112,8 +132,9 @@ exports.sendCard = (req, res) => {
 
 exports.addCommentToCards = (req, res, next) => {
   const cardId = req.card.id;
+  const comment = req.comment;
   Card.findByIdAndUpdate(cardId, {
-    $addToSet: { comments: result._id }
+    $addToSet: { comments: comment._id }
   }).then(() => {
     next();
   });

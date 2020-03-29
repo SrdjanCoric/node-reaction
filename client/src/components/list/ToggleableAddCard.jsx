@@ -19,7 +19,6 @@ class ToggleableAddCard extends React.Component {
     this.setState({
       title: ""
     });
-    console.log("here");
     this.props.onAddCardClose();
   };
 

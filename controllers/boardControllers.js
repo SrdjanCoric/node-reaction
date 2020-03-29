@@ -52,13 +52,17 @@ exports.findBoard = (req, res, next) => {
     if (!board) {
       throw new Error("Board doesn't exist");
     }
+    req.board = board;
     next();
   });
 };
 
 exports.updateBoard = (req, res, next) => {
   const list = req.list;
+  const boardId = req.board._id;
   Board.findByIdAndUpdate(boardId, {
     $addToSet: { lists: list._id } // adds list to the lists array in board
+  }).then(() => {
+    next();
   });
 };

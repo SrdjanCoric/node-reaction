@@ -6,7 +6,6 @@ const userControllers = require("../controllers/userControllers");
 const listControllers = require("../controllers/listControllers");
 const cardControllers = require("../controllers/cardControllers");
 const actionControllers = require("../controllers/actionControllers");
-const actionControllers = require("../controllers/actionControllers");
 const commentControllers = require("../controllers/commentControllers");
 
 router.use(checkAuth);

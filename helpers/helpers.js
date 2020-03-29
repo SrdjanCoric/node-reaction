@@ -47,7 +47,7 @@ const isListChanged = (attrs, card) => {
   return false;
 };
 
-const parseCardChange = (attrs, card) => {
+exports.parseCardChange = (attrs, card) => {
   if (isDueDateAdded(attrs, card)) {
     return "Due date was added";
   } else if (isDueDateRemoved(attrs, card)) {
@@ -67,9 +67,6 @@ const parseCardChange = (attrs, card) => {
   }
 };
 
-const checkUserBoardPermissions = (board, user) => {
+exports.checkUserBoardPermissions = (board, user) => {
   return board.userId === user._id;
 };
-
-module.exports = parseCardChange;
-module.exports = checkUserBoardPermissions;

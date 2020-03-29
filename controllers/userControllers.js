@@ -29,7 +29,7 @@ exports.findByEmail = (req, res, next) => {
     if (user.password !== password) {
       throw new Error("Could not authenticate user");
     }
-    req.userData.userId = user._id;
+    req.userData = { userId: user._id };
     next();
   });
 };
@@ -40,7 +40,7 @@ exports.createToken = (req, res, next) => {
     { _id: user._id, email: user.email },
     process.env.JWTSECRET,
     {
-      expiresIn: "1min"
+      expiresIn: "5min"
     }
   );
   req.token = token;
@@ -48,7 +48,7 @@ exports.createToken = (req, res, next) => {
 };
 
 exports.sendUser = (req, res, next) => {
-  const token = req.token;
+  const token = req.token || req.headers.authorization;
   const user = req.user;
   res.json({ token, user });
 };
