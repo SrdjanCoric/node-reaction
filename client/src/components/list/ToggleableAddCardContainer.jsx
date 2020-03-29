@@ -21,7 +21,7 @@ const mergeStateToProps = (stateProps, dispatchProps, ownProps) => {
   );
   let targetPosition = cardsFromList.length;
   let position = calculatePosition(cardsFromList, targetPosition);
-  let token = sessionStorage.getItem("jwtToken");
+  let token = localStorage.getItem("jwtToken");
   return {
     onAddCard: (title, callback) => {
       dispatchProps.dispatch(

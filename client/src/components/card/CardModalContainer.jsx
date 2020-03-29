@@ -60,7 +60,7 @@ class CardModalContainer extends React.Component {
   };
 
   componentDidMount() {
-    let token = sessionStorage.getItem("jwtToken");
+    let token = localStorage.getItem("jwtToken");
     if (!this.props.user) {
       this.props.onFetchUser(token);
     } else {
@@ -75,7 +75,7 @@ class CardModalContainer extends React.Component {
       prevProps.userisLoggedIn !== this.props.user.isLoggedIn &&
       !this.props.user.isLoggedIn
     ) {
-      let token = sessionStorage.getItem("jwtToken");
+      let token = localStorage.getItem("jwtToken");
       this.props.onFetchUser(token);
     } else if (prevProps.card !== this.props.card) {
       this.updateCardInState(this.props.card);

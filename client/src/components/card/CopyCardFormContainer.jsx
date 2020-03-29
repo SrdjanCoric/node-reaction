@@ -14,7 +14,7 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 const mapDispatchToProps = dispatch => {
-  let token = sessionStorage.getItem("jwtToken");
+  let token = localStorage.getItem("jwtToken");
   return {
     onCreateCard: (listId, card, callback) => {
       dispatch(actions.createCard(token, listId, card, callback));

@@ -43,9 +43,9 @@ export function createCard(token, listId, card, callback) {
   return function(dispatch) {
     dispatch(createCardRequest);
     apiClient.createCard(token, listId, card, data => {
-      dispatch(createCardSuccess(data.newCard));
+      dispatch(createCardSuccess(data.card));
       if (callback) {
-        callback(data.newCard);
+        callback(data.card);
       }
     });
   };

@@ -51,7 +51,7 @@ const mapDispatchToProps = dispatch => {
 
 class BoardContainer extends React.Component {
   componentDidMount() {
-    let token = sessionStorage.getItem("jwtToken");
+    let token = localStorage.getItem("jwtToken");
     this.props.onFetchUser(token);
   }
   componentDidUpdate(prevProps) {
@@ -59,7 +59,7 @@ class BoardContainer extends React.Component {
       prevProps.user.isLoggedIn !== this.props.user.isLoggedIn &&
       !this.props.user.isLoggedIn
     ) {
-      let token = sessionStorage.getItem("jwtToken");
+      let token = localStorage.getItem("jwtToken");
       this.props.onFetchUser(token);
     }
   }

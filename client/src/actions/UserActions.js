@@ -18,7 +18,7 @@ export function login(user, callback) {
     apiClient.login(
       user,
       data => {
-        sessionStorage.setItem("jwtToken", data.token);
+        localStorage.setItem("jwtToken", data.token);
         dispatch(loginSuccess(data));
         if (callback) callback();
       },
@@ -63,7 +63,7 @@ export function signup(user, callback) {
   return function(dispatch) {
     dispatch(signUpRequest());
     apiClient.signup(user, data => {
-      sessionStorage.setItem("jwtToken", data.token);
+      localStorage.setItem("jwtToken", data.token);
       dispatch(signUpSuccess(data));
       if (callback) callback();
     });
@@ -79,7 +79,7 @@ export function fetchUser(token) {
         if (data.token) {
           dispatch(fetchUserSuccess(data));
         } else {
-          sessionStorage.removeItem("jwtToken");
+          localStorage.removeItem("jwtToken");
         }
       },
       () => {

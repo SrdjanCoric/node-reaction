@@ -28,7 +28,7 @@ class BoardsDashboardContainer extends React.Component {
     }
   };
   componentDidMount() {
-    let token = sessionStorage.getItem("jwtToken");
+    let token = localStorage.getItem("jwtToken");
     this.props.onFetchBoards(token);
   }
   handleNewBoardClick = e => {

@@ -20,7 +20,7 @@ const mapDispatchToProps = dispatch => {
 
 class LoginContainer extends React.Component {
   componentDidMount() {
-    let token = sessionStorage.getItem("jwtToken");
+    let token = localStorage.getItem("jwtToken");
     if (!token || token === "") {
       this.props.onInvalidUser();
       return;
@@ -32,7 +32,7 @@ class LoginContainer extends React.Component {
       prevProps.userisLoggedIn !== this.props.user.isLoggedIn &&
       !this.props.user.isLoggedIn
     ) {
-      let token = sessionStorage.getItem("jwtToken");
+      let token = localStorage.getItem("jwtToken");
       this.props.onFetchUser(token);
     }
   }
