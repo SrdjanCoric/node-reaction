@@ -3,20 +3,10 @@ const jwt = require("jsonwebtoken");
 
 exports.findUser = (req, res, next) => {
   const userId = req.userData.userId;
-  User.findById(userId)
-    .populate({
-      path: "boards",
-      populate: {
-        path: "lists",
-        populate: {
-          path: "cards"
-        }
-      }
-    })
-    .then(user => {
-      req.user = user;
-      next();
-    });
+  User.findById(userId).then(user => {
+    req.user = user;
+    next();
+  });
 };
 
 exports.findByEmail = (req, res, next) => {
@@ -26,7 +16,9 @@ exports.findByEmail = (req, res, next) => {
       throw new Error("User could not be found");
     }
 
-    if (user.password !== password) {
+    let isPasswordValid = user.validatePassword(password);
+
+    if (!isPasswordValid) {
       throw new Error("Could not authenticate user");
     }
     req.userData = { userId: user._id };
@@ -63,4 +55,17 @@ exports.createUser = (req, res, next) => {
   } else {
     res.json({ error: "All fields have to be filled" });
   }
+};
+
+exports.addBoardToUser = (req, res, next) => {
+  const board = req.board;
+  console.log("add board to user", board);
+  const userId = req.userData.userId;
+  User.findByIdAndUpdate(
+    userId,
+    {
+      $addToSet: { boards: board }
+    },
+    { new: true }
+  ).then(() => next());
 };

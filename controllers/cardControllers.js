@@ -82,16 +82,8 @@ exports.updateCard = (req, res, next) => {
 
 exports.cardBelongsToUser = (req, res, next) => {
   const user = req.user;
-  const cardId = req.params.id || req.body.cardId;
-  let cards = user.boards.reduce((cards, board) => {
-    const { lists, boardWithoutLists } = board;
-    let cardsToAdd = lists.reduce((listCards, list) => {
-      const { cards, listWithoutCards } = list;
-      return listCards.concat(cards);
-    }, []);
-    return cards.concat(cardsToAdd);
-  }, []);
-  if (!cards.some(card => String(card._id) === String(cardId))) {
+  const card = req.card;
+  if (!user.boards.some(boardId => String(boardId) === String(card.boardId))) {
     throw new Error("You are not allowed to do that");
   }
   next();

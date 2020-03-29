@@ -1,29 +1,24 @@
 const Board = require("../models/board");
 
-exports.getBoards = (req, res) => {
+exports.getBoards = (req, res, next) => {
   const userId = req.userData.userId;
 
-  return Board.find({
+  Board.find({
     userId
-  }).then(data => res.json(data));
+  }).then(boards => {
+    req.boards = boards;
+    next();
+  });
 };
 
 exports.createBoard = (req, res, next) => {
   const userId = req.userData.userId;
   if (req.body.board.title) {
-    Board.create({ title: req.body.board.title, userId })
-      .then(result => {
-        board = result;
-        return User.findByIdAndUpdate(
-          userId,
-          {
-            $addToSet: { boards: board }
-          },
-          { new: true }
-        );
-      })
-      .then(_ => res.json(board))
-      .catch(err => next(err));
+    Board.create({ title: req.body.board.title, userId }).then(board => {
+      console.log("created board", board);
+      req.board = board;
+      next();
+    });
   } else {
     res.json({ error: "The input field is empty" });
   }
@@ -38,9 +33,8 @@ exports.getBoard = (req, res, next) => {
       if (!board) {
         throw new Error("Board doesn't exist");
       }
-      res.json({
-        board
-      });
+      req.board = board;
+      next();
     })
     .catch(err => next(err));
 };
@@ -57,7 +51,7 @@ exports.findBoard = (req, res, next) => {
   });
 };
 
-exports.updateBoard = (req, res, next) => {
+exports.addListToBoard = (req, res, next) => {
   const list = req.list;
   const boardId = req.board._id;
   Board.findByIdAndUpdate(boardId, {
@@ -65,4 +59,14 @@ exports.updateBoard = (req, res, next) => {
   }).then(() => {
     next();
   });
+};
+
+exports.sendBoard = (req, res, next) => {
+  const board = req.board;
+  res.json(board);
+};
+
+exports.sendBoards = (req, res, next) => {
+  const boards = req.boards;
+  res.json(boards);
 };

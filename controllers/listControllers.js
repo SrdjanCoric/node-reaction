@@ -4,6 +4,8 @@ exports.findList = (req, res, next) => {
   const listId = req.body.listId || req.params.id;
 
   const user = req.user;
+  console.log(user);
+  console.log(listId);
   List.findById(listId)
     .populate("board")
     .then(list => {
@@ -11,8 +13,10 @@ exports.findList = (req, res, next) => {
         throw new Error("List doesn't exist");
       }
       if (
-        !user.boards.some(board => {
-          return String(board._id) === String(list.boardId);
+        !user.boards.some(boardId => {
+          console.log("from board", boardId);
+          console.log("from list", list.boardId);
+          return String(boardId) === String(list.boardId);
         })
       ) {
         throw new Error("You are not allowed to do that");

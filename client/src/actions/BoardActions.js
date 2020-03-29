@@ -65,10 +65,10 @@ export function fetchBoard(token, id, callback) {
     apiClient.getBoard(
       token,
       id,
-      data => {
-        dispatch(fetchBoardSuccess(data.board));
+      board => {
+        dispatch(fetchBoardSuccess(board));
         if (callback) {
-          callback(data.board);
+          callback(board);
         }
       },
       () => {

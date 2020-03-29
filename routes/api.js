@@ -10,17 +10,26 @@ const commentControllers = require("../controllers/commentControllers");
 
 router.use(checkAuth);
 
-router.get("/boards", boardControllers.getBoards);
+router.get("/boards", boardControllers.getBoards, boardControllers.sendBoards);
 
-router.post("/boards", boardControllers.createBoard);
+router.post(
+  "/boards",
+  boardControllers.createBoard,
+  userControllers.addBoardToUser,
+  boardControllers.sendBoard
+);
 
-router.get("/boards/:id", boardControllers.getBoard);
+router.get(
+  "/boards/:id",
+  boardControllers.getBoard,
+  boardControllers.sendBoard
+);
 
 router.post(
   "/lists",
   boardControllers.findBoard,
   listControllers.createList,
-  boardControllers.updateBoard,
+  boardControllers.addListToBoard,
   listControllers.sendList
 );
 
@@ -46,16 +55,16 @@ router.post(
 router.get(
   "/cards/:id",
   userControllers.findUser,
-  cardControllers.cardBelongsToUser,
   cardControllers.findCard,
+  cardControllers.cardBelongsToUser,
   cardControllers.sendCard
 );
 
 router.put(
   "/cards/:id",
   userControllers.findUser,
-  cardControllers.cardBelongsToUser,
   cardControllers.findCard,
+  cardControllers.cardBelongsToUser,
   actionControllers.createAction,
   cardControllers.updateCard,
   cardControllers.sendCard

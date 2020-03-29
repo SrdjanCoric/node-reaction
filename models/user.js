@@ -15,7 +15,7 @@ const UserSchema = new Schema(
       required: true,
       unique: true
     },
-    password: {
+    hashedPassword: {
       type: String,
       required: true
     },
@@ -31,26 +31,26 @@ const UserSchema = new Schema(
   }
 );
 
-// UserSchema.plugin(uniqueValidator);
+UserSchema.plugin(uniqueValidator);
 
-// UserSchema.virtual("password").set(function(value) {
-//   this._password = value;
-//   this.hashedPassword = bcrypt.hashSync(value, 8);
-// });
+UserSchema.virtual("password").set(function(value) {
+  this._password = value;
+  this.hashedPassword = bcrypt.hashSync(value, 8);
+});
 
-// UserSchema.virtual("password").get(function() {
-//   return this.hashedPassword;
-// });
+UserSchema.virtual("password").get(function() {
+  return this.hashedPassword;
+});
 
-// UserSchema.path("hashedPassword").validate(function(val) {
-//   if (this._password.length < 8) {
-//     this.invalidate("password", "Password must be at least 8 characters");
-//   }
-// });
+UserSchema.path("hashedPassword").validate(function(val) {
+  if (this._password.length < 8) {
+    this.invalidate("password", "Password must be at least 8 characters");
+  }
+});
 
-// UserSchema.methods.validatePassword = function(password) {
-//   return bcrypt.compareSync(password, this.hashedPassword);
-// };
+UserSchema.methods.validatePassword = function(password) {
+  return bcrypt.compareSync(password, this.hashedPassword);
+};
 
 const User = mongoose.model("User", UserSchema);
 
