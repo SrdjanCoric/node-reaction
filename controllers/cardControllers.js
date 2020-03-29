@@ -1,3 +1,5 @@
+const Card = require("../models/card");
+
 exports.createCard = (req, res, next) => {
   let { title, position, copyFrom, keep } = card;
   const list = req.list;

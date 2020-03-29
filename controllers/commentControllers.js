@@ -1,3 +1,5 @@
+const Comment = require("../models/comment");
+
 exports.createComment = (req, res, next) => {
   const { text, cardId } = req.body;
   return Comment.create({

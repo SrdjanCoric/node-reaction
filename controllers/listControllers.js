@@ -1,3 +1,5 @@
+const List = require("../models/list");
+
 exports.findList = (req, res, next) => {
   const listId = req.body.listId || req.params.id;
   const user = req.user;

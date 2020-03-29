@@ -1,3 +1,5 @@
+const Board = require("../models/board");
+
 exports.getBoards = (req, res) => {
   const userId = req.userData.userId;
 
