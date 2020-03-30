@@ -71,13 +71,13 @@ class CardModalContainer extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (
-      prevProps.userisLoggedIn !== this.props.user.isLoggedIn &&
-      !this.props.user.isLoggedIn
-    ) {
-      let token = localStorage.getItem("jwtToken");
-      this.props.onFetchUser(token);
-    } else if (prevProps.card !== this.props.card) {
+    // if (
+    //   prevProps.userisLoggedIn !== this.props.user.isLoggedIn &&
+    //   !this.props.user.isLoggedIn
+    // ) {
+    //   let token = localStorage.getItem("jwtToken");
+    //   this.props.onFetchUser(token);
+    if (prevProps.card !== this.props.card) {
       this.updateCardInState(this.props.card);
     }
   }
@@ -89,9 +89,13 @@ class CardModalContainer extends React.Component {
   handleTitleBlur = e => {
     e.preventDefault();
 
-    this.props.onUpdateCard(this.props.user.token, this.state.card._id, {
-      title: this.state.title
-    });
+    this.props.onUpdateCard(
+      localStorage.getItem("jwtToken"),
+      this.state.card._id,
+      {
+        title: this.state.title
+      }
+    );
   };
 
   updateCardInState = newCard => {
@@ -102,17 +106,25 @@ class CardModalContainer extends React.Component {
   };
 
   handleToggleArchive = () => {
-    this.props.onUpdateCard(this.props.user.token, this.props.card._id, {
-      archived: !this.props.card.archived
-    });
+    this.props.onUpdateCard(
+      localStorage.getItem("jwtToken"),
+      this.props.card._id,
+      {
+        archived: !this.props.card.archived
+      }
+    );
   };
 
   handleToggleCompleted = e => {
     e.preventDefault();
     e.stopPropagation();
-    this.props.onUpdateCard(this.props.user.token, this.props.card._id, {
-      completed: !this.state.card.completed
-    });
+    this.props.onUpdateCard(
+      localStorage.getItem("jwtToken"),
+      this.props.card._id,
+      {
+        completed: !this.state.card.completed
+      }
+    );
   };
 
   handleShowPopover = (e, type) => {
@@ -150,7 +162,7 @@ class CardModalContainer extends React.Component {
     const dateTime = `${date} ${time}`;
 
     this.props.onUpdateCard(
-      this.props.user.token,
+      localStorage.getItem("jwtToken"),
       this.state.card._id,
       { dueDate: moment(dateTime, "M/D/YYYY h:mm A").toISOString() },
       () => {
@@ -162,7 +174,7 @@ class CardModalContainer extends React.Component {
   handleDueDateRemove = e => {
     e.preventDefault();
     this.props.onUpdateCard(
-      this.props.user.token,
+      localStorage.getItem("jwtToken"),
       this.state.card._id,
       { dueDate: null, completed: false },
       () => {
@@ -181,13 +193,20 @@ class CardModalContainer extends React.Component {
       labels = currentLabels.filter(currentLabel => currentLabel !== label);
     }
 
-    this.props.onUpdateCard(this.props.user.token, this.state.card._id, {
-      labels
-    });
+    this.props.onUpdateCard(
+      localStorage.getItem("jwtToken"),
+      this.state.card._id,
+      {
+        labels
+      }
+    );
   };
 
   handleDeleteCard = e => {
-    this.props.onDeleteCard(this.props.user.token, this.props.card._id);
+    this.props.onDeleteCard(
+      localStorage.getItem("jwtToken"),
+      this.props.card._id
+    );
   };
 
   popoverChildren() {
@@ -231,9 +250,7 @@ class CardModalContainer extends React.Component {
   }
 
   render() {
-    if (this.props.user.invalidUser) {
-      return <Redirect to="/" />;
-    } else if (this.state.card && this.props.list) {
+    if (this.state.card && this.props.list) {
       return (
         <>
           <CardModal

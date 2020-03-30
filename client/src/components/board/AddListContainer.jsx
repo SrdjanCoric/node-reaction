@@ -66,7 +66,7 @@ class AddListContainer extends React.Component {
   handleSubmit = e => {
     e.stopPropagation();
     e.preventDefault();
-    this.props.onSubmit(this.props.user.token, this.state.title);
+    this.props.onSubmit(localStorage.getItem("jwtToken"), this.state.title);
     this.handleClose(e);
     this.setState({ title: "" });
   };

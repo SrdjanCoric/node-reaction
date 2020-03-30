@@ -1,12 +1,13 @@
 import axios from "axios";
 import * as routes from "../constants/ApiRoutes";
+import { clearStorage } from "../utils/helpers";
 
-function logError(errorResponse, error) {
-  if (error) {
-    error();
-  }
-
+function logError(errorResponse) {
   const response = errorResponse.response;
+
+  if (response.status === 401) {
+    clearStorage();
+  }
 
   if (response && response.data && response.data.error) {
     console.error(`HTTP Error: ${response.data.error}`);
@@ -23,7 +24,7 @@ axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 axios.defaults.headers.common["Accept"] = "application/json";
 
 const apiClient = {
-  getBoards: function(token, callback) {
+  getBoards: function(token, callback, error) {
     let config = {
       headers: {
         Authorization: token
@@ -33,7 +34,7 @@ const apiClient = {
       .get(routes.BOARDS_INDEX_URL, config)
       .then(unwrapData)
       .then(callback)
-      .catch(logError);
+      .catch(res => logError(res, error));
   },
   createBoard: function(token, board, callback) {
     let config = {

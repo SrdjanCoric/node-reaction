@@ -24,7 +24,6 @@ export function createList(token, boardId, title, position, callback) {
   return function(dispatch) {
     dispatch(createListRequest());
     apiClient.createList(token, boardId, title, position, data => {
-      console.log("list", data.list);
       dispatch(createListSuccess(data.list));
       if (callback) {
         callback(data.list);

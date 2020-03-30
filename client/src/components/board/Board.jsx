@@ -16,12 +16,15 @@ class Board extends React.Component {
       }
     }
     if (!boardId) return null;
-    this.props.onFetchBoard(this.props.user.token, boardId);
+    this.props.onFetchBoard(localStorage.getItem("jwtToken"), boardId);
   }
 
   componentDidUpdate(prevProps) {
     if (this.props.boardId !== prevProps.boardId && this.props.boardId) {
-      this.props.onFetchBoard(this.props.user.token, this.props.boardId);
+      this.props.onFetchBoard(
+        localStorage.getItem("jwtToken"),
+        this.props.boardId
+      );
     }
   }
   render() {

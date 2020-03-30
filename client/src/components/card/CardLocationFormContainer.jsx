@@ -50,7 +50,7 @@ class CardLocationFormContainer extends React.Component {
   };
 
   componentDidMount() {
-    this.props.onFetchBoards(this.props.user.token);
+    this.props.onFetchBoards(localStorage.getItem("jwtToken"));
     this.setState(
       {
         selectedBoard: this.props.boards.find(board => {
@@ -93,7 +93,7 @@ class CardLocationFormContainer extends React.Component {
   };
 
   selectBoard = id => {
-    this.props.onFetchBoard(this.props.user.token, id, board => {
+    this.props.onFetchBoard(localStorage.getItem("jwtToken"), id, board => {
       const newLists = board.lists.sort(sortByTitle);
       this.setState(
         {

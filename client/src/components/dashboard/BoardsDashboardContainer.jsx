@@ -27,10 +27,12 @@ class BoardsDashboardContainer extends React.Component {
       type: null
     }
   };
+
   componentDidMount() {
     let token = localStorage.getItem("jwtToken");
     this.props.onFetchBoards(token);
   }
+
   handleNewBoardClick = e => {
     this.setState({
       popover: {

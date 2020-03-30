@@ -54,33 +54,18 @@ class BoardContainer extends React.Component {
     let token = localStorage.getItem("jwtToken");
     this.props.onFetchUser(token);
   }
-  componentDidUpdate(prevProps) {
-    if (
-      prevProps.user.isLoggedIn !== this.props.user.isLoggedIn &&
-      !this.props.user.isLoggedIn
-    ) {
-      let token = localStorage.getItem("jwtToken");
-      this.props.onFetchUser(token);
-    }
-  }
   render() {
-    if (this.props.user.invalidUser) {
-      return <Redirect to="/" />;
-    } else if (this.props.user.isLoggedIn) {
-      return (
-        <Board
-          board={this.props.board}
-          card={this.props.card}
-          boardId={this.props.boardId}
-          user={this.props.user}
-          loading={this.props.loading}
-          match={this.props.match}
-          onFetchBoard={this.props.onFetchBoard}
-        />
-      );
-    } else {
-      return null;
-    }
+    return (
+      <Board
+        board={this.props.board}
+        card={this.props.card}
+        boardId={this.props.boardId}
+        user={this.props.user}
+        loading={this.props.loading}
+        match={this.props.match}
+        onFetchBoard={this.props.onFetchBoard}
+      />
+    );
   }
 }
 

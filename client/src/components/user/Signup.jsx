@@ -1,7 +1,6 @@
 import React from "react";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { Redirect } from "react-router-dom";
 
 class Signup extends React.Component {
   state = {
@@ -11,9 +10,9 @@ class Signup extends React.Component {
   };
 
   render() {
-    if (this.props.user.isLoggedIn) {
-      return <Redirect to="/" />;
-    }
+    // if (this.props.user.isLoggedIn) {
+    //   return <Redirect to="/" />;
+    // }
     return (
       <Formik
         initialValues={{ fullName: "", email: "", password: "" }}

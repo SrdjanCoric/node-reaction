@@ -1,5 +1,6 @@
 import apiClient from "../lib/ApiClient";
 import * as types from "../constants/ActionTypes";
+import { clearStorage } from "../utils/helpers";
 
 export function loginRequest() {
   return { type: types.LOGIN_REQUEST };
@@ -9,23 +10,6 @@ export function loginSuccess(data) {
   return {
     type: types.LOGIN_SUCCESS,
     payload: { token: data.token, user: data.user }
-  };
-}
-
-export function login(user, callback) {
-  return function(dispatch) {
-    dispatch(loginRequest());
-    apiClient.login(
-      user,
-      data => {
-        localStorage.setItem("jwtToken", data.token);
-        dispatch(loginSuccess(data));
-        if (callback) callback();
-      },
-      () => {
-        dispatch(invalidUser());
-      }
-    );
   };
 }
 
@@ -53,9 +37,28 @@ export function fetchUserSuccess(data) {
   };
 }
 
-export function invalidUser() {
+export function logoutSuccess() {
   return {
-    type: "INVALID_USER"
+    type: "LOGOUT_SUCCESS"
+  };
+}
+
+export function login(user, callback) {
+  return function(dispatch) {
+    dispatch(loginRequest());
+    apiClient.login(user, data => {
+      localStorage.setItem("jwtToken", data.token);
+      localStorage.setItem("user", data.user);
+      dispatch(loginSuccess(data));
+      if (callback) callback();
+    });
+  };
+}
+
+export function logout() {
+  return function(dispatch) {
+    dispatch(logoutSuccess());
+    clearStorage();
   };
 }
 
@@ -64,6 +67,7 @@ export function signup(user, callback) {
     dispatch(signUpRequest());
     apiClient.signup(user, data => {
       localStorage.setItem("jwtToken", data.token);
+      localStorage.setItem("user", data.user);
       dispatch(signUpSuccess(data));
       if (callback) callback();
     });
@@ -73,24 +77,13 @@ export function signup(user, callback) {
 export function fetchUser(token) {
   return function(dispatch) {
     dispatch(fetchUserRequest());
-    apiClient.fetchUser(
-      token,
-      data => {
-        if (data.token) {
-          dispatch(fetchUserSuccess(data));
-        } else {
-          localStorage.removeItem("jwtToken");
-        }
-      },
-      () => {
-        dispatch(invalidUser());
+    apiClient.fetchUser(token, data => {
+      if (data.token) {
+        dispatch(fetchUserSuccess(data));
+      } else {
+        localStorage.removeItem("jwtToken");
+        localStorage.removeItem("user");
       }
-    );
-  };
-}
-
-export function noUser() {
-  return function(dispatch) {
-    dispatch(invalidUser());
+    });
   };
 }

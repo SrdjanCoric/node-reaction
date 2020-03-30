@@ -34,7 +34,7 @@ class NewBoardFormContainer extends React.Component {
 
     const newBoard = { title: this.state.title };
 
-    this.props.onSubmit(this.props.user.token, newBoard, () => {
+    this.props.onSubmit(localStorage.getItem("jwtToken"), newBoard, () => {
       this.setState({
         title: ""
       });

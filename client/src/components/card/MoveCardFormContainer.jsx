@@ -58,7 +58,7 @@ class MoveCardFormContainer extends Component {
     );
 
     this.props.onUpdateCard(
-      this.props.state.user.token,
+      localStorage.getItem("jwtToken"),
       this.props.card._id,
       {
         listId: listId,

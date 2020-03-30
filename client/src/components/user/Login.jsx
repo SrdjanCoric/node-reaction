@@ -1,12 +1,27 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 class Login extends React.Component {
   state = {
     email: "",
     password: "",
-    errors: { email: "", password: "" }
+    errors: { email: "", password: "" },
+    redirect: false
   };
+
+  componentDidUpdate(prevProps) {
+    if (
+      prevProps.isLoggedIn !== this.props.isLoggedIn &&
+      this.props.isLoggedIn
+    ) {
+      this.setState({ redirect: true });
+    } else if (
+      prevProps.isLoggedIn !== this.props.isLoggedIn &&
+      !this.props.isLoggedIn
+    ) {
+      this.setState({ redirect: false });
+    }
+  }
 
   handleToggleErrors = callback => {
     if (!this.state.email) {
@@ -61,6 +76,9 @@ class Login extends React.Component {
   };
 
   render() {
+    if (this.props.isLoggedIn && this.state.redirect) {
+      return <Redirect to="/" />;
+    }
     return (
       <div className="login-wrap">
         <h2>Login</h2>

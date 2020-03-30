@@ -5,7 +5,7 @@ import cards from "./cards";
 import comments from "./comments";
 import actions from "./actions";
 import user from "./user";
-import loading from "./loading";
+import authentication from "./authentication";
 
 const rootReducer = combineReducers({
   boards,
@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
   comments,
   actions,
   user,
-  loading
+  authentication
 });
 
 export default rootReducer;

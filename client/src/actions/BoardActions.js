@@ -40,7 +40,8 @@ export function fetchBoards(token) {
         dispatch(fetchBoardsSuccess(boards));
       },
       () => {
-        dispatch(invalidUser());
+        localStorage.removeItem("jwtToken");
+        localStorage.removeItem("user");
       }
     );
   };
