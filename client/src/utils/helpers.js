@@ -55,3 +55,8 @@ export const clearStorage = () => {
   localStorage.removeItem("jwtToken");
   localStorage.removeItem("user");
 };
+
+export const populatedStorage = data => {
+  localStorage.setItem("jwtToken", data.token);
+  localStorage.setItem("user", JSON.stringify(data.user));
+};

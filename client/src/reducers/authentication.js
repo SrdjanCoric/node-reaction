@@ -1,4 +1,5 @@
 let user = localStorage.getItem("user");
+user = JSON.parse(user);
 let token = localStorage.getItem("jwtToken");
 const initialState = user
   ? { token, user, isLoggedIn: true }

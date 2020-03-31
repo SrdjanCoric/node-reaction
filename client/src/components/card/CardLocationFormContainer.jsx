@@ -173,7 +173,7 @@ class CardLocationFormContainer extends React.Component {
 
       let potentialPositionsLength;
 
-      if (currentPosition == undefined || this.props.mode === "copy") {
+      if (currentPosition === undefined || this.props.mode === "copy") {
         potentialPositionsLength = cards.length + 1;
       } else {
         potentialPositionsLength = cards.length;

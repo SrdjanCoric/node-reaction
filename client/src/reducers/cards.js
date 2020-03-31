@@ -34,7 +34,10 @@ const cards = (state = [], action) => {
       });
     case "DELETE_CARD_SUCCESS":
       return state.filter(card => {
-        if (card._id !== action.payload.cardId) return card;
+        if (card._id !== action.payload.cardId) {
+          return card;
+        }
+        return null;
       });
     default:
       return state;

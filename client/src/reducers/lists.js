@@ -1,7 +1,7 @@
 const lists = (state = [], action) => {
   switch (action.type) {
     case "FETCH_BOARD_SUCCESS":
-      const { lists, ...newBoardWithoutLists } = action.board;
+      const { lists } = action.board;
 
       let listsWithoutCards = lists.map(list => {
         const { cards, ...listWithoutCards } = list;

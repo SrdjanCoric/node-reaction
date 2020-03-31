@@ -2,8 +2,6 @@ import React from "react";
 import { connect } from "react-redux";
 import * as boardActions from "../../actions/BoardActions";
 import Board from "./Board";
-import { Redirect } from "react-router-dom";
-import * as userActions from "../../actions/UserActions";
 
 const mapStateToProps = (state, ownProps) => {
   let boardId;
@@ -42,18 +40,11 @@ const mapDispatchToProps = dispatch => {
   return {
     onFetchBoard: (token, boardId, callback) => {
       dispatch(boardActions.fetchBoard(token, boardId, callback));
-    },
-    onFetchUser: token => {
-      dispatch(userActions.fetchUser(token));
     }
   };
 };
 
 class BoardContainer extends React.Component {
-  componentDidMount() {
-    let token = localStorage.getItem("jwtToken");
-    this.props.onFetchUser(token);
-  }
   render() {
     return (
       <Board

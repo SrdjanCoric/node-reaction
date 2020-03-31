@@ -18,7 +18,7 @@ import SignupContainer from "./user/SignupContainer";
 import LoginContainer from "./user/LoginContainer";
 import BoardsDashboardContainer from "./dashboard/BoardsDashboardContainer";
 import AuthRoute from "./shared/AuthRoute";
-import { clearStorage, checkAuth } from "../utils/helpers";
+import { checkAuth } from "../utils/helpers";
 
 class Application extends React.Component {
   state = {
@@ -56,7 +56,11 @@ class Application extends React.Component {
     }
     return (
       <div>
-        <TopNav user={this.props.user} loading={this.props.loading} />
+        <TopNav
+          user={this.props.user}
+          isLoggedIn={this.props.isLoggedIn}
+          onLogout={this.props.onLogout}
+        />
         <Route path="/login" exact component={LoginContainer} />
         <AuthRoute exact path="/" component={BoardsDashboardContainer} />
         <AuthRoute
@@ -65,10 +69,7 @@ class Application extends React.Component {
           component={BoardContainer}
         />
         <AuthRoute exact path="/cards/:id" component={CardModalContainer} />
-        <Route
-          path="/signup"
-          render={() => <SignupContainer user={this.props.user} />}
-        />
+        <Route path="/signup" component={SignupContainer} />
         <Route path="/ui" exact component={UISection} />
         <Route path="/ui/allBoards" component={AllBoards} />
         <Route path="/ui/cardArchived" component={CardArchived} />

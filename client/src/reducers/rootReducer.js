@@ -4,7 +4,6 @@ import lists from "./lists";
 import cards from "./cards";
 import comments from "./comments";
 import actions from "./actions";
-import user from "./user";
 import authentication from "./authentication";
 
 const rootReducer = combineReducers({
@@ -13,7 +12,6 @@ const rootReducer = combineReducers({
   cards,
   comments,
   actions,
-  user,
   authentication
 });
 

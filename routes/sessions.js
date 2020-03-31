@@ -18,11 +18,4 @@ router.post(
   userControllers.sendUser
 );
 
-router.get(
-  "/user",
-  checkAuth,
-  userControllers.findUser,
-  userControllers.sendUser
-);
-
 module.exports = router;

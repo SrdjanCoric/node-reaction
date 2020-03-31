@@ -42,7 +42,7 @@ exports.createToken = (req, res, next) => {
 exports.sendUser = (req, res, next) => {
   const token = req.token || req.headers.authorization;
   const user = req.user;
-  res.json({ token, user });
+  res.json({ token, user: user.toObject({ getters: true }) });
 };
 
 exports.createUser = (req, res, next) => {

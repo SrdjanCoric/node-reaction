@@ -8,7 +8,7 @@ const SingleBoard = () => {
             <div class="list-wrapper">
               <div class="list-background">
                 <div class="list">
-                  <a class="more-icon sm-icon" href=""></a>
+                  {/* <a class="more-icon sm-icon" href="#"></a> */}
                   <div>
                     <p class="list-title">Stuff to try (this is a list)</p>
                   </div>

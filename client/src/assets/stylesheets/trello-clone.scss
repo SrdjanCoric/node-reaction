@@ -1004,11 +1004,16 @@ small {
 .user-info {
   float: right;
 }
+
 .user-info li {
   width: 30px;
   padding: 0;
   text-align: center;
 }
+.user-info li .logout-button {
+  width: 50px;
+}
+
 .user-info .split-button-1 {
   background: none;
   background-color: #d6dadc;
@@ -1032,6 +1037,7 @@ small {
 }
 .user-info .split-button-2 {
   margin-left: 0;
+  margin-right: 5px;
   border-radius: 0 3px 3px 0;
   text-align: center;
   width: auto;

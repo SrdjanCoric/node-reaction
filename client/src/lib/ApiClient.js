@@ -157,18 +157,6 @@ const apiClient = {
       .then(unwrapData)
       .then(callback)
       .catch(logError);
-  },
-  fetchUser: function(token, callback, error) {
-    let config = {
-      headers: {
-        Authorization: token
-      }
-    };
-    return axios
-      .get("/sessions/user", config)
-      .then(unwrapData)
-      .then(callback)
-      .catch(res => logError(res, error));
   }
 };
 

@@ -10,20 +10,21 @@ const TopNav = props => {
   };
 
   let nav;
-  if (false) {
+  if (props.isLoggedIn) {
     nav = (
       <ul className="user-info">
         <li className="create-icon icon"></li>
         <li className="split-button-1">
-          {/* {createAbbreviation(props.user.fullName)} */}
+          {createAbbreviation(props.user.fullName)}
         </li>
-        {/* <li className="split-button-2">{props.user.fullName}</li> */}
-        <li className="info-icon icon"></li>
-        <li className="notifications-icon icon"></li>
+        <li className="split-button-2">{props.user.fullName}</li>
+        <li className="login-nav split-button-2">
+          <Link to="/login" onClick={props.onLogout}>
+            Log out
+          </Link>
+        </li>
       </ul>
     );
-    // } else if (props.loading) {
-    //   nav = null;
   } else {
     nav = (
       <ul className="login-nav">

@@ -2,6 +2,12 @@ import { connect } from "react-redux";
 import Signup from "./Signup";
 import * as actions from "../../actions/UserActions";
 
+const mapStateToProps = state => {
+  return {
+    isLoggedIn: state.authentication.isLoggedIn
+  };
+};
+
 const mapDispatchToProps = dispatch => {
   return {
     onSignup: (user, callback) => {
@@ -10,4 +16,4 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(null, mapDispatchToProps)(Signup);
+export default connect(mapStateToProps, mapDispatchToProps)(Signup);

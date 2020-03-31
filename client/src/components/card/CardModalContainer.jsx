@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 import * as actions from "../../actions/CardActions";
 import { createComment } from "../../actions/CommentActions";
 import moment from "moment";
@@ -11,7 +10,6 @@ import DueDateForm from "./DueDateForm";
 import LabelsForm from "./LabelsForm";
 import CopyCardFormContainer from "./CopyCardFormContainer";
 import MoveCardFormContainer from "./MoveCardFormContainer";
-import * as userActions from "../../actions/UserActions";
 
 const mapStateToProps = (state, ownProps) => {
   const cardId = ownProps.match.params.id;
@@ -41,9 +39,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(createComment(token, cardId, comment, callback)),
     onDeleteCard: (token, cardId, callback) => {
       dispatch(actions.deleteCard(token, cardId, callback));
-    },
-    onFetchUser: token => {
-      dispatch(userActions.fetchUser(token));
     }
   };
 };
@@ -61,22 +56,12 @@ class CardModalContainer extends React.Component {
 
   componentDidMount() {
     let token = localStorage.getItem("jwtToken");
-    if (!this.props.user) {
-      this.props.onFetchUser(token);
-    } else {
-      this.props.onFetchCard(token, newCard => {
-        this.updateCardInState(newCard);
-      });
-    }
+    this.props.onFetchCard(token, newCard => {
+      this.updateCardInState(newCard);
+    });
   }
 
   componentDidUpdate(prevProps) {
-    // if (
-    //   prevProps.userisLoggedIn !== this.props.user.isLoggedIn &&
-    //   !this.props.user.isLoggedIn
-    // ) {
-    //   let token = localStorage.getItem("jwtToken");
-    //   this.props.onFetchUser(token);
     if (prevProps.card !== this.props.card) {
       this.updateCardInState(this.props.card);
     }
@@ -245,6 +230,8 @@ class CardModalContainer extends React.Component {
               card={this.state.card}
             />
           );
+        default:
+          return null;
       }
     }
   }

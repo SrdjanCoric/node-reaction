@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import dragula from "react-dragula";
 import ListWrapperContainer from "../list/ListWrapperContainer";
 import * as cardSelectors from "../../selectors/CardSelectors";
