@@ -27,7 +27,7 @@ export function signUpSuccess(data) {
 
 export function logoutSuccess() {
   return {
-    type: "LOGOUT_SUCCESS"
+    type: types.LOGOUT_SUCCESS
   };
 }
 

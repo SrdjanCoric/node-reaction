@@ -1,6 +1,8 @@
+import * as types from "../constants/ActionTypes";
+
 const cards = (state = [], action) => {
   switch (action.type) {
-    case "FETCH_BOARD_SUCCESS":
+    case types.FETCH_BOARD_SUCCESS:
       const lists = action.board.lists;
       const boardId = action.board._id;
       let cards = [];
@@ -19,20 +21,20 @@ const cards = (state = [], action) => {
         }
       });
       return filteredState.concat(cards);
-    case "CREATE_CARD_SUCCESS":
+    case types.CREATE_CARD_SUCCESS:
       return state.concat(action.payload.card);
-    case "FETCH_CARD_SUCCESS":
+    case types.FETCH_CARD_SUCCESS:
       const excludedCards = state.filter(
         card => card._id !== action.payload.card._id
       );
       const card = action.payload.card;
       return excludedCards.concat(card);
-    case "UPDATE_CARD_SUCCESS":
+    case types.UPDATE_CARD_SUCCESS:
       return state.map(card => {
         if (card._id === action.payload.card._id) return action.payload.card;
         else return card;
       });
-    case "DELETE_CARD_SUCCESS":
+    case types.DELETE_CARD_SUCCESS:
       return state.filter(card => {
         if (card._id !== action.payload.cardId) {
           return card;

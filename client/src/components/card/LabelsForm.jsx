@@ -19,7 +19,7 @@ const LabelsForm = props => {
   return (
     <div id="add-options-labels-dropdown">
       <header>
-        <span>Change due date</span>
+        <span>Change label</span>
         <a href="#" className="icon-sm icon-close" onClick={props.onClose}></a>
       </header>
       <div className="content">

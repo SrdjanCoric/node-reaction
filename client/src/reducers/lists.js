@@ -1,6 +1,8 @@
+import * as types from "../constants/ActionTypes";
+
 const lists = (state = [], action) => {
   switch (action.type) {
-    case "FETCH_BOARD_SUCCESS":
+    case types.FETCH_BOARD_SUCCESS:
       const { lists } = action.board;
 
       let listsWithoutCards = lists.map(list => {
@@ -11,9 +13,9 @@ const lists = (state = [], action) => {
         list => list.boardId !== action.board._id
       );
       return filteredLists.concat(listsWithoutCards);
-    case "CREATE_LIST_SUCCESS":
+    case types.CREATE_LIST_SUCCESS:
       return state.concat(action.payload.list);
-    case "UPDATE_LIST_SUCCESS":
+    case types.UPDATE_LIST_SUCCESS:
       return state.map(list => {
         if (list._id === action.payload.listId) {
           return Object.assign({}, list, {

@@ -25,12 +25,6 @@ export function fetchBoardSuccess(board) {
   return { type: types.FETCH_BOARD_SUCCESS, board };
 }
 
-export function invalidUser() {
-  return {
-    type: "INVALID_USER"
-  };
-}
-
 export function fetchBoards(token) {
   return function(dispatch) {
     dispatch(fetchBoardsRequest());
@@ -63,18 +57,11 @@ export function createBoard(token, board, callback) {
 export function fetchBoard(token, id, callback) {
   return function(dispatch) {
     dispatch(fetchBoardRequest());
-    apiClient.getBoard(
-      token,
-      id,
-      board => {
-        dispatch(fetchBoardSuccess(board));
-        if (callback) {
-          callback(board);
-        }
-      },
-      () => {
-        dispatch(invalidUser());
+    apiClient.getBoard(token, id, board => {
+      dispatch(fetchBoardSuccess(board));
+      if (callback) {
+        callback(board);
       }
-    );
+    });
   };
 }
