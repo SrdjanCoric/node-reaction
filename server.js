@@ -8,7 +8,7 @@ require("dotenv").config();
 
 const app = express();
 
-const port = process.env.PORT || 5000;
+const port = process.env.PORT || 8000;
 
 mongoose.set("useFindAndModify", false);
 
@@ -20,6 +20,8 @@ mongoose
 
 //since mongoose promise is depreciated, we overide it with node's promise
 mongoose.Promise = global.Promise;
+
+app.use(express.static(path.join(__dirname, "client", "build")));
 
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
@@ -38,6 +40,10 @@ app.use("/sessions", sessions);
 app.use((err, req, res, next) => {
   console.log(err);
   next();
+});
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
 });
 
 app.listen(port, () => {

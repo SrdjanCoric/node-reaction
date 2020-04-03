@@ -6,13 +6,17 @@
       "secure": false
     }
   },
+  "engines": {
+    "node": "12.14.1"
+  },
   "version": "1.0.0",
   "description": "building reaction app using mongodb, express, react and nodejs",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "start-watch": "nodemon index.js",
-    "dev": "concurrently \"yarn run start-watch\" \"cd client && yarn start\""
+    "start": "node server.js",
+    "start-watch": "nodemon server.js",
+    "dev": "concurrently \"yarn run start-watch\" \"cd client && yarn start\"",
+    "heroku-postbuild": "cd client && npm install --only=dev && npm install && npm run build"
   },
   "author": "Ojini Jude",
   "license": "MIT",
