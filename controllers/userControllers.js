@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 
 exports.findUser = (req, res, next) => {
   const userId = req.userData.userId;
-  User.findById(userId).then(user => {
+  User.findById(userId).then((user) => {
     req.user = user;
     next();
   });
@@ -11,7 +11,7 @@ exports.findUser = (req, res, next) => {
 
 exports.findByEmail = (req, res, next) => {
   const { email, password } = req.body.user;
-  User.findOne({ email }).then(user => {
+  User.findOne({ email }).then((user) => {
     if (!user) {
       throw new Error("User could not be found");
     }
@@ -32,7 +32,7 @@ exports.createToken = (req, res, next) => {
     { _id: user._id, email: user.email },
     process.env.JWTSECRET,
     {
-      expiresIn: "1min"
+      expiresIn: "1min",
     }
   );
   req.token = token;
@@ -48,7 +48,7 @@ exports.sendUser = (req, res, next) => {
 exports.createUser = (req, res, next) => {
   const { user } = req.body;
   if (user.fullName && user.email && user.password) {
-    User.create(user).then(user => {
+    User.create(user).then((user) => {
       req.user = user;
       next();
     });
@@ -59,12 +59,11 @@ exports.createUser = (req, res, next) => {
 
 exports.addBoardToUser = (req, res, next) => {
   const board = req.board;
-  console.log("add board to user", board);
   const userId = req.userData.userId;
   User.findByIdAndUpdate(
     userId,
     {
-      $addToSet: { boards: board }
+      $addToSet: { boards: board },
     },
     { new: true }
   ).then(() => next());
