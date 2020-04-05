@@ -7,9 +7,8 @@ exports.createCard = (req, res, next) => {
   const boardId = list.boardId;
   let copyCard = {};
   if (copyFrom) {
-    Card.findById(copyFrom).then(card => {
+    Card.findById(copyFrom).then((card) => {
       copyCard = card;
-      console.log("copyCard", copyCard);
       Card.create({
         labels: copyCard.labels,
         dueDate: copyCard.dueDate,
@@ -20,9 +19,8 @@ exports.createCard = (req, res, next) => {
         archived: false,
         position: position,
         comments: keep ? copyCard.comments : [],
-        actions: copyCard.actions
-      }).then(card => {
-        console.log(card);
+        actions: copyCard.actions,
+      }).then((card) => {
         req.card = card;
         next();
       });
@@ -38,8 +36,8 @@ exports.createCard = (req, res, next) => {
       archived: false,
       position: position,
       comments: [],
-      actions: []
-    }).then(card => {
+      actions: [],
+    }).then((card) => {
       req.card = card;
       next();
     });
@@ -55,12 +53,12 @@ exports.updateCard = (req, res, next) => {
       card._id,
       {
         ...attrs,
-        $push: { actions: action._id }
+        $push: { actions: action._id },
       },
       { new: true }
     )
       .populate(["actions"])
-      .then(card => {
+      .then((card) => {
         req.card = card;
         next();
       });
@@ -68,12 +66,12 @@ exports.updateCard = (req, res, next) => {
     Card.findByIdAndUpdate(
       card._id,
       {
-        ...attrs
+        ...attrs,
       },
       { new: true }
     )
       .populate(["actions"])
-      .then(card => {
+      .then((card) => {
         req.card = card;
         next();
       });
@@ -83,7 +81,9 @@ exports.updateCard = (req, res, next) => {
 exports.cardBelongsToUser = (req, res, next) => {
   const user = req.user;
   const card = req.card;
-  if (!user.boards.some(boardId => String(boardId) === String(card.boardId))) {
+  if (
+    !user.boards.some((boardId) => String(boardId) === String(card.boardId))
+  ) {
     throw new Error("You are not allowed to do that");
   }
   next();
@@ -96,17 +96,17 @@ exports.findCard = (req, res, next) => {
       {
         path: "list",
         populate: {
-          path: "board"
-        }
+          path: "board",
+        },
       },
       {
-        path: "comments"
+        path: "comments",
       },
       {
-        path: "actions"
-      }
+        path: "actions",
+      },
     ])
-    .then(card => {
+    .then((card) => {
       if (!card) {
         throw new Error("Card doesn't exist");
       }
@@ -118,7 +118,7 @@ exports.findCard = (req, res, next) => {
 exports.sendCard = (req, res) => {
   const card = req.card;
   res.json({
-    card
+    card,
   });
 };
 
@@ -126,7 +126,7 @@ exports.addCommentToCards = (req, res, next) => {
   const cardId = req.card.id;
   const comment = req.comment;
   Card.findByIdAndUpdate(cardId, {
-    $addToSet: { comments: comment._id }
+    $addToSet: { comments: comment._id },
   }).then(() => {
     next();
   });
