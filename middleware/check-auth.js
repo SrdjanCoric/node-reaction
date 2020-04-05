@@ -6,6 +6,7 @@ module.exports = (req, res, next) => {
     if (!token) {
       throw new Error("Must pass a token");
     }
+    token = token.split(" ")[1];
     const decodedToken = jwt.verify(token, process.env.JWTSECRET);
     req.userData = { userId: decodedToken._id };
     next();

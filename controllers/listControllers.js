@@ -4,18 +4,14 @@ exports.findList = (req, res, next) => {
   const listId = req.body.listId || req.params.id;
 
   const user = req.user;
-  console.log(user);
-  console.log(listId);
   List.findById(listId)
     .populate("board")
-    .then(list => {
+    .then((list) => {
       if (!list) {
         throw new Error("List doesn't exist");
       }
       if (
-        !user.boards.some(boardId => {
-          console.log("from board", boardId);
-          console.log("from list", list.boardId);
+        !user.boards.some((boardId) => {
           return String(boardId) === String(list.boardId);
         })
       ) {
@@ -31,17 +27,17 @@ exports.updateList = (req, res, next) => {
   const { title, position } = req.body.list;
 
   List.findByIdAndUpdate(
-    listId,
+    list._id,
     {
       title: title || list.title,
-      position: position || list.position
+      position: position || list.position,
     },
     { new: true }
   )
     .populate({
-      path: "cards"
+      path: "cards",
     })
-    .then(updatedList => {
+    .then((updatedList) => {
       req.list = updatedList;
       next();
     });
@@ -51,7 +47,7 @@ exports.addCardToList = (req, res, next) => {
   const card = req.card;
   const listId = req.list._id;
   List.findByIdAndUpdate(listId, {
-    $addToSet: { cards: card._id }
+    $addToSet: { cards: card._id },
   }).then(() => next());
 };
 
@@ -61,8 +57,8 @@ exports.createList = (req, res, next) => {
     title: title || "New List",
     position: position || 65535,
     cards: [],
-    boardId: boardId
-  }).then(list => {
+    boardId: boardId,
+  }).then((list) => {
     req.list = list;
     next();
   });
@@ -78,7 +74,7 @@ exports.removeCardFromList = (req, res, next) => {
   List.updateOne(
     { cards: { $in: [card._id] } },
     {
-      $pull: { cards: card._id }
+      $pull: { cards: card._id },
     }
   ).then(() => next());
 };
