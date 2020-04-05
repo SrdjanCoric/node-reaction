@@ -22,7 +22,7 @@ import { checkAuth } from "../utils/helpers";
 
 class Application extends React.Component {
   state = {
-    redirect: false
+    redirect: false,
   };
 
   componentDidMount() {
@@ -39,7 +39,7 @@ class Application extends React.Component {
       prevProps.isLoggedIn !== this.props.isLoggedIn &&
       this.props.isLoggedIn
     ) {
-      logoutTimer = setTimeout(this.props.onLogout, 30 * 1000);
+      logoutTimer = setTimeout(this.props.onLogout, 1000 * 60 * 60);
       this.setState({ redirect: true });
     } else if (
       prevProps.isLoggedIn !== this.props.isLoggedIn &&

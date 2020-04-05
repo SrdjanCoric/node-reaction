@@ -32,7 +32,7 @@ exports.createToken = (req, res, next) => {
     { _id: user._id, email: user.email },
     process.env.JWTSECRET,
     {
-      expiresIn: "1min",
+      expiresIn: "1h",
     }
   );
   req.token = token;
