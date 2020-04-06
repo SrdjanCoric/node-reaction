@@ -3,26 +3,32 @@ import { connect } from "react-redux";
 import * as actions from "../../actions/CommentActions";
 import NewCommentForm from "./NewCommentForm";
 
+const mapStateToProps = (state) => {
+  return {
+    user: state.authentication.user,
+  };
+};
+
 const mapDispatchToProps = (dispatch, ownProps) => {
   let token = localStorage.getItem("jwtToken");
   return {
     onSubmit: (text, callback) => {
       dispatch(actions.createComment(token, ownProps.cardId, text, callback));
-    }
+    },
   };
 };
 
 class NewCommentFormContainer extends Component {
   state = {
     comment: "",
-    isSaving: false
+    isSaving: false,
   };
 
-  handleChange = e => {
+  handleChange = (e) => {
     this.setState({ comment: e.target.value });
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     e.preventDefault();
 
     this.setState({ isSaving: true });
@@ -30,7 +36,7 @@ class NewCommentFormContainer extends Component {
     this.props.onSubmit(this.state.comment, () => {
       this.setState({
         comment: "",
-        isSaving: false
+        isSaving: false,
       });
     });
   };
@@ -38,6 +44,7 @@ class NewCommentFormContainer extends Component {
   render() {
     return (
       <NewCommentForm
+        user={this.props.user}
         onChange={this.handleChange}
         onSubmit={this.handleSubmit}
         comment={this.state.comment}
@@ -46,4 +53,7 @@ class NewCommentFormContainer extends Component {
   }
 }
 
-export default connect(null, mapDispatchToProps)(NewCommentFormContainer);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NewCommentFormContainer);

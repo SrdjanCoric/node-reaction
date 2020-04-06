@@ -1,14 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { createAbbreviation } from "../../utils/helpers";
 
-const TopNav = props => {
-  const createAbbreviation = fullName => {
-    return fullName
-      .split(" ")
-      .map(name => name[0].toUpperCase())
-      .join("");
-  };
-
+const TopNav = (props) => {
   let nav;
   if (props.isLoggedIn) {
     nav = (

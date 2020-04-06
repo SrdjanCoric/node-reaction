@@ -1,7 +1,14 @@
 import moment from "moment";
 import decode from "jwt-decode";
 
-export const dueClass = card => {
+export const createAbbreviation = (fullName) => {
+  return fullName
+    .split(" ")
+    .map((name) => name[0].toUpperCase())
+    .join("");
+};
+
+export const dueClass = (card) => {
   const diff = moment(card.dueDate).diff(new Date(), "days");
 
   if (card.completed) {
@@ -17,7 +24,7 @@ export const dueClass = card => {
   }
 };
 
-export const formatDueDate = dueDate => {
+export const formatDueDate = (dueDate) => {
   const momentDate = moment(dueDate);
   let formatString;
 
@@ -56,7 +63,7 @@ export const clearStorage = () => {
   localStorage.removeItem("user");
 };
 
-export const populatedStorage = data => {
+export const populatedStorage = (data) => {
   localStorage.setItem("jwtToken", data.token);
   localStorage.setItem("user", JSON.stringify(data.user));
 };

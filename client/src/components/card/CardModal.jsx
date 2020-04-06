@@ -4,14 +4,15 @@ import CardDescriptionContainer from "./CardDescriptionContainer";
 import moment from "moment";
 import { dueClass, formatDueDate } from "../../utils/helpers";
 import NewCommentFormContainer from "./NewCommentFormContainer";
+import { createAbbreviation } from "../../utils/helpers";
 
-const CardModal = props => {
-  const labels = card =>
+const CardModal = (props) => {
+  const labels = (card) =>
     card.labels.map((label, idx) => (
       <div
         className="member-container"
         key={idx}
-        onClick={e => props.onShowPopover(e, "labels")}
+        onClick={(e) => props.onShowPopover(e, "labels")}
       >
         <div className={`card-label ${label} colorblindable`}></div>
       </div>
@@ -20,14 +21,16 @@ const CardModal = props => {
   const formattedDueDate = formatDueDate(props.card.dueDate);
   let comments;
   if (props.card) {
-    comments = props.comments.map(comment =>
+    comments = props.comments.map((comment) =>
       comment.isAction ? (
         <li key={`action_${comment._id}`}>
           <div className="member-container">
-            <div className="card-member small-size">VR</div>
+            <div className="card-member small-size">
+              {createAbbreviation(props.user.name)}
+            </div>
           </div>
           <p>
-            <span className="member-name">Victor Reyes</span>{" "}
+            <span className="member-name">{props.user.name}</span>{" "}
             {comment.description}{" "}
             <small>{moment(comment.createdAt).fromNow()}</small>
           </p>
@@ -68,8 +71,8 @@ const CardModal = props => {
           <i className="card-icon icon .close-modal"></i>
           <textarea
             name="title"
-            onChange={e => props.onTitleChange(e)}
-            onBlur={e => props.onTitleBlur(e)}
+            onChange={(e) => props.onTitleChange(e)}
+            onBlur={(e) => props.onTitleBlur(e)}
             className="list-title"
             value={props.title}
             style={{ height: "45px" }}
@@ -79,7 +82,7 @@ const CardModal = props => {
             in list{" "}
             <a
               className="link"
-              onClick={e => props.onShowPopover(e, "move-card")}
+              onClick={(e) => props.onShowPopover(e, "move-card")}
             >
               {props.list.title}
             </a>
@@ -96,7 +99,7 @@ const CardModal = props => {
                     {labels(props.card)}
                     <div
                       className="member-container"
-                      onClick={e => props.onShowPopover(e, "labels")}
+                      onClick={(e) => props.onShowPopover(e, "labels")}
                     >
                       <i className="plus-icon sm-icon"></i>
                     </div>
@@ -108,7 +111,7 @@ const CardModal = props => {
                     <div
                       id="dueDateDisplay"
                       className={dueDateClass}
-                      onClick={e => props.onShowPopover(e, "due-date")}
+                      onClick={(e) => props.onShowPopover(e, "due-date")}
                     >
                       <input
                         id="dueDateCheckbox"
@@ -154,7 +157,7 @@ const CardModal = props => {
             </li>
             <li
               className="label-button"
-              onClick={e => props.onShowPopover(e, "labels")}
+              onClick={(e) => props.onShowPopover(e, "labels")}
             >
               <i className="label-icon sm-icon"></i>Labels
             </li>
@@ -163,7 +166,7 @@ const CardModal = props => {
             </li>
             <li
               className="date-button"
-              onClick={e => props.onShowPopover(e, "due-date")}
+              onClick={(e) => props.onShowPopover(e, "due-date")}
             >
               <i className="clock-icon sm-icon"></i>Due Date
             </li>
@@ -175,13 +178,13 @@ const CardModal = props => {
           <ul>
             <li
               className="move-button"
-              onClick={e => props.onShowPopover(e, "move-card")}
+              onClick={(e) => props.onShowPopover(e, "move-card")}
             >
               <i className="forward-icon sm-icon"></i>Move
             </li>
             <li
               className="copy-button"
-              onClick={e => props.onShowPopover(e, "copy-card")}
+              onClick={(e) => props.onShowPopover(e, "copy-card")}
             >
               <i className="card-icon sm-icon"></i>Copy
             </li>

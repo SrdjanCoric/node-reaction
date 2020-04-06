@@ -13,8 +13,8 @@ import MoveCardFormContainer from "./MoveCardFormContainer";
 
 const mapStateToProps = (state, ownProps) => {
   const cardId = ownProps.match.params.id;
-  const card = state.cards.find(card => card._id === cardId);
-  const list = state.lists.find(list => list._id === card.listId);
+  const card = state.cards.find((card) => card._id === cardId);
+  const list = state.lists.find((list) => list._id === card.listId);
   const comments = commentSelectors.cardCommentsAndActions(
     state,
     cardId,
@@ -24,13 +24,13 @@ const mapStateToProps = (state, ownProps) => {
     card,
     list,
     comments,
-    user: state.user
+    user: state.authentication.user,
   };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    onFetchCard: token =>
+    onFetchCard: (token) =>
       dispatch(actions.fetchCard(token, ownProps.match.params.id)),
     onUpdateCard: (token, id, attrs, callback) => {
       dispatch(actions.updateCard(token, id, attrs, callback));
@@ -39,7 +39,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(createComment(token, cardId, comment, callback)),
     onDeleteCard: (token, cardId, callback) => {
       dispatch(actions.deleteCard(token, cardId, callback));
-    }
+    },
   };
 };
 
@@ -50,13 +50,13 @@ class CardModalContainer extends React.Component {
     popover: {
       visible: false,
       attachedTo: null,
-      type: null
-    }
+      type: null,
+    },
   };
 
   componentDidMount() {
     let token = localStorage.getItem("jwtToken");
-    this.props.onFetchCard(token, newCard => {
+    this.props.onFetchCard(token, (newCard) => {
       this.updateCardInState(newCard);
     });
   }
@@ -67,26 +67,26 @@ class CardModalContainer extends React.Component {
     }
   }
 
-  handleTitleChange = e => {
+  handleTitleChange = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
-  handleTitleBlur = e => {
+  handleTitleBlur = (e) => {
     e.preventDefault();
 
     this.props.onUpdateCard(
       localStorage.getItem("jwtToken"),
       this.state.card._id,
       {
-        title: this.state.title
+        title: this.state.title,
       }
     );
   };
 
-  updateCardInState = newCard => {
+  updateCardInState = (newCard) => {
     this.setState({
       card: newCard,
-      title: newCard.title
+      title: newCard.title,
     });
   };
 
@@ -95,19 +95,19 @@ class CardModalContainer extends React.Component {
       localStorage.getItem("jwtToken"),
       this.props.card._id,
       {
-        archived: !this.props.card.archived
+        archived: !this.props.card.archived,
       }
     );
   };
 
-  handleToggleCompleted = e => {
+  handleToggleCompleted = (e) => {
     e.preventDefault();
     e.stopPropagation();
     this.props.onUpdateCard(
       localStorage.getItem("jwtToken"),
       this.props.card._id,
       {
-        completed: !this.state.card.completed
+        completed: !this.state.card.completed,
       }
     );
   };
@@ -119,12 +119,12 @@ class CardModalContainer extends React.Component {
       popover: {
         type,
         attachedTo: e.target,
-        visible: true
-      }
+        visible: true,
+      },
     });
   };
 
-  handleClosePopover = e => {
+  handleClosePopover = (e) => {
     e.preventDefault();
     this.onClosePopover();
   };
@@ -134,12 +134,12 @@ class CardModalContainer extends React.Component {
       popover: {
         type: null,
         attachedTo: null,
-        visible: false
-      }
+        visible: false,
+      },
     });
   };
 
-  handleDueDateSubmit = e => {
+  handleDueDateSubmit = (e) => {
     e.preventDefault();
 
     const date = e.target.querySelector(".datepicker-select-date input").value;
@@ -156,7 +156,7 @@ class CardModalContainer extends React.Component {
     );
   };
 
-  handleDueDateRemove = e => {
+  handleDueDateRemove = (e) => {
     e.preventDefault();
     this.props.onUpdateCard(
       localStorage.getItem("jwtToken"),
@@ -175,19 +175,19 @@ class CardModalContainer extends React.Component {
     if (currentLabels.indexOf(label) === -1) {
       labels = currentLabels.concat(label);
     } else {
-      labels = currentLabels.filter(currentLabel => currentLabel !== label);
+      labels = currentLabels.filter((currentLabel) => currentLabel !== label);
     }
 
     this.props.onUpdateCard(
       localStorage.getItem("jwtToken"),
       this.state.card._id,
       {
-        labels
+        labels,
       }
     );
   };
 
-  handleDeleteCard = e => {
+  handleDeleteCard = (e) => {
     this.props.onDeleteCard(
       localStorage.getItem("jwtToken"),
       this.props.card._id
