@@ -62,7 +62,7 @@ const apiClient = {
       method: "POST",
       url: routes.CREATE_LIST_URL,
       data: { boardId, title, position },
-      headers: { Authorization: `Bearer + ${token}` },
+      headers: { Authorization: `Bearer ${token}` },
     };
     return axios(config).then(unwrapData).then(callback).catch(logError);
   },
