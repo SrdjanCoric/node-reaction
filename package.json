@@ -21,7 +21,7 @@
   "author": "Ojini Jude",
   "license": "MIT",
   "dependencies": {
-    "bcrypt": "^4.0.1",
+    "bcrypt": "^5.0.0",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.4.1",
     "cookie-parser": "^1.4.5",
